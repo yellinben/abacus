@@ -1,4 +1,4 @@
-import {FETCHED_DOCUMENTS} from './types'
+import { FETCHED_DOCUMENTS, FETCHED_DOCUMENT } from './types'
 
 const API = {
   host: "http://localhost",
@@ -7,13 +7,12 @@ const API = {
   version: 1
 }
 
-const apiURL = (endpoint) => {
-  return `${API.host}:${API.port}/${API.path}/v${API.version}/${endpoint}`;
+const apiURL = (...paths) => {
+  return `${API.host}:${API.port}/${API.path}/v${API.version}/${paths.join('/')}`;
 }
 
 const fetchingDocuments = () => {
   return dispatch => {
-    console.log('fetchingDocuments');
     fetch(apiURL('documents'))
       .then(res => res.json())
       .then(docs => {
@@ -26,4 +25,22 @@ const fetchedDocuments = (documents) => {
   return {type: FETCHED_DOCUMENTS, payload: documents};
 }
 
-export {fetchingDocuments, fetchedDocuments};
+const fetchingDocument = (id) => {
+  return dispatch => {
+    console.log('fetchingDocuments');
+    fetch(apiURL('documents', id))
+      .then(res => res.json())
+      .then(doc => {
+        dispatch(fetchedDocument(doc));
+      })
+  };
+}
+
+const fetchedDocument = (document) => {
+  return {type: FETCHED_DOCUMENT, payload: document};
+}
+
+export {
+  fetchingDocuments, fetchedDocuments,
+  fetchingDocument, fetchedDocument
+};

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Route } from 'react-router-dom';
 
 import { fetchingDocuments } from './redux/actions'
+
 import Sidebar from './containers/Sidebar';
+import DocPage from './containers/DocPage';
 
 class App extends Component {
   componentDidMount() {
@@ -13,7 +15,11 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Sidebar />
+        <Route path="/" 
+          component={Sidebar} />
+        <Route exact
+          path="/documents/:docId"
+          component={DocPage} />
       </div>
     );
   }
@@ -21,7 +27,9 @@ class App extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchingDocuments: () => {dispatch(fetchingDocuments())}
+    fetchingDocuments: () => {
+      dispatch(fetchingDocuments())
+    }
   }
 }
 
