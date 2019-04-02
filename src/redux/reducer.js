@@ -1,7 +1,17 @@
-// import { combineReducers } from "redux";
+import { combineReducers } from "redux";
+import {FETCHED_DOCUMENTS} from './types';
 
-const reducer = (state) => {
-  return state;
+const documentsReducer = (state = [], action) => {
+  switch (action.type) {
+    case FETCHED_DOCUMENTS:
+      return action.payload;
+    default:
+      return state;
+  }
 }
 
-export default reducer;
+const rootReducer = combineReducers({
+  documents: documentsReducer
+});
+
+export default rootReducer;
