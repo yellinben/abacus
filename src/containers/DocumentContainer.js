@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { fetchingDocument } from '../redux/actions'
 
+import '../Document.scss'
 import DocTable from './DocTable';
 
 class DocumentContainer extends Component {

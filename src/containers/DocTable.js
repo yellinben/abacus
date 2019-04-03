@@ -5,9 +5,9 @@ export default class DocTable extends Component {
   render() {
     const {lines} = this.props;
     return (
-      <table>
+      <table className="doc-table">
         <tbody>
-          {lines.map(line => <DocTableRow line={line} />)}
+          {lines.map(line => <DocTableRow key={line.id} line={line} />)}
         </tbody>
       </table>
     )
