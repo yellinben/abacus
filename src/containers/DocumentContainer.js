@@ -1,20 +1,26 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
 import { fetchingDocument } from '../redux/actions'
 
-class DocPage extends Component {
+import DocTable from './DocTable';
+
+class DocumentContainer extends Component {
   componentDidMount() {
     const params = this.props.match.params;
     this.props.fetchingDocument(params.docId);
   }
 
   render() {
+    const {doc} = this.props;
     return (
       <div className="doc-page-container">
-        {!this.props.doc ? 
-         <h3>Loading</h3> :
-         <h1>{this.props.doc.title}</h1>
+        {!doc ? 
+          <h3>Loading</h3> :
+          <Fragment>
+            <h1>{doc.title}</h1>
+            <DocTable lines={doc.lines}></DocTable>
+          </Fragment>
         }
       </div>
     )
@@ -35,4 +41,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DocPage);
+export default connect(mapStateToProps, mapDispatchToProps)(DocumentContainer);

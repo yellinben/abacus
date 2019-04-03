@@ -5,7 +5,7 @@ import { withRouter, Route } from 'react-router-dom';
 import { fetchingDocuments } from './redux/actions'
 
 import Sidebar from './containers/Sidebar';
-import DocPage from './containers/DocPage';
+import DocumentContainer from './containers/DocumentContainer';
 
 class App extends Component {
   componentDidMount() {
@@ -19,7 +19,7 @@ class App extends Component {
           component={Sidebar} />
         <Route exact
           path="/documents/:docId"
-          component={DocPage} />
+          component={DocumentContainer} />
       </div>
     );
   }

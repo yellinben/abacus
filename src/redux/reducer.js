@@ -10,7 +10,11 @@ const documentsReducer = (state = [], action) => {
   }
 }
 
-const documentReducer = (state = [], action) => {
+const defaultDoc = {
+  lines: []
+}
+
+const documentReducer = (state = defaultDoc, action) => {
   switch (action.type) {
     case FETCHED_DOCUMENT:
       return action.payload;
