@@ -1,0 +1,49 @@
+/* base/layout */
+
+.doc-page-container {
+  padding: 0 40px;
+}
+
+/* table */
+
+.doc-table {
+  // temp
+  // from semantic-ui
+  width: 100%;
+  background: #FFFFFF;
+  margin: 1em 0em;
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  border-radius: 0.28571429rem;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.87);
+  border-collapse: separate;
+  border-spacing: 0px;
+
+  $row-font-size: 14px;
+
+  .doc-table-row {}
+
+  td { 
+    padding: 10px 8px; 
+    border-bottom: 1px solid rgba(34,36,38,.1);
+    font-size: $row-font-size;
+  }
+
+  .row-input {
+    text-align: center;
+
+    input {
+      width: 99%;
+      padding: 0;
+      font-size: $row-font-size;
+      border: none;
+    }
+  }
+
+  .row-result {
+    background: #e0e0e0;
+    text-align: left;
+  }
+}
