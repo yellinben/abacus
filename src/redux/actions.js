@@ -1,7 +1,7 @@
 import { 
   FETCHED_DOCUMENTS, 
   FETCHED_DOCUMENT, 
-  UPDATE_DOCUMENT,
+  UPDATED_DOCUMENT,
   LINE_UPDATED,
   ADD_LINE
 } from './types'
@@ -68,15 +68,21 @@ const addLine = () => {
   return {type: ADD_LINE}
 }
 
-const updateDocument = (doc) => {
+const updatingDocument = (doc) => {
   return dispatch => {
     console.log('updateDoc', doc);
     fetch(apiURL('documents', doc.id), {
       method: "PATCH",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(doc)
-    }).then(res => res.json())
+    })
+      .then(res => res.json())
+      .then(doc => dispatch(updatedDocument(doc)))
   }
+}
+
+const updatedDocument = (doc) => {
+  return {type: UPDATED_DOCUMENT, payload: doc};
 }
 
 // const updateTitle = (doc) => {
@@ -85,6 +91,7 @@ const updateDocument = (doc) => {
 
 export {
   fetchingDocuments, fetchedDocuments,
-  fetchingDocument, fetchedDocument, updateDocument,
+  fetchingDocument, fetchedDocument, 
+  updatingDocument, updatedDocument,
   updatingLine, updatedLine, addLine
 };

@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchingDocument, updateDocument } from '../redux/actions';
+import { fetchingDocument, updatingDocument } from '../redux/actions';
 
 import '../Document.scss';
 import DocTable from './DocTable';
@@ -89,7 +89,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(fetchingDocument(id));
     },
     updateDocument: (doc) => {
-      dispatch(updateDocument(doc));
+      dispatch(updatingDocument(doc));
     }
   };
 }

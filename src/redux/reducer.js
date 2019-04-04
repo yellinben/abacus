@@ -3,6 +3,7 @@ import { combineReducers } from "redux";
 import { 
   FETCHED_DOCUMENTS, 
   FETCHED_DOCUMENT, 
+  UPDATED_DOCUMENT,
   LINE_UPDATED,
   ADD_LINE
 } from './types';
@@ -11,6 +12,11 @@ const documentsReducer = (state = [], action) => {
   switch (action.type) {
     case FETCHED_DOCUMENTS:
       return action.payload;
+    case UPDATED_DOCUMENT:
+      const doc = action.payload
+      return state.map(d => {
+        return (d.id === doc.id) ? doc : d;
+      });
     default:
       return state;
   }
