@@ -34,22 +34,25 @@
   background: #FFFFFF;
   margin: 1em 0em;
   border: 1px solid rgba(34, 36, 38, 0.15);
-  -webkit-box-shadow: none;
-          box-shadow: none;
+  box-shadow: none;
   border-radius: 0.28571429rem;
   text-align: left;
   color: rgba(0, 0, 0, 0.87);
   border-collapse: separate;
   border-spacing: 0px;
 
-  $row-font-size: 14px;
+  $row-font-size: 18px;
+  $row-font-weight: normal;
+
+  $row-pad-top: 10px;
+  $row-pad-side: 8px;
 
   .doc-table-row {}
 
   td { 
-    padding: 10px 8px; 
     border-bottom: 1px solid rgba(34,36,38,.1);
     font-size: $row-font-size;
+    font-weight: $row-font-weight;
   }
 
   .row-input {
@@ -57,14 +60,16 @@
 
     input {
       width: 99%;
-      padding: 0;
-      font-size: $row-font-size;
+      padding: $row-pad-top $row-pad-side; 
       border: none;
+      font-size: $row-font-size;
+      font-weight: $row-font-weight;
     }
   }
 
   .row-result {
     background: #e0e0e0;
     text-align: left;
+    padding: $row-pad-top ($row-pad-side * 2); 
   }
 }

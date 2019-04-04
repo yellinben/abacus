@@ -46,9 +46,9 @@ const fetchedDocument = (document) => {
   return {type: FETCHED_DOCUMENT, payload: document};
 }
 
-const updatingLine = (docId, line) => {
+const updatingLine = (line) => {
   return dispatch => {
-    fetch(apiURL('documents', docId, 'lines', line.id), {
+    fetch(apiURL('documents', line.document_id, 'lines', line.id), {
       method: "PATCH",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(line)

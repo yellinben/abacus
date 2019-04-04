@@ -7,7 +7,10 @@ import {
 } from '../redux/actions';
 
 class DocTableRow extends Component {
-  docId = () => this.props.match.params.docId
+  // docId = () => {
+  //   console.log(this.props);
+  //   return this.props.match.params.docId;
+  // }
 
   handleChange = (e) => {
     if (e.target.value !== this.props.line.input) {
@@ -17,14 +20,17 @@ class DocTableRow extends Component {
   }
 
   handleKeydown = (e) => {
-    // detect 'enter' or 'esc' keypress
-    if (e.which === 13 || e.which === 27) addLine();
+    if (e.which === 13) {
+      // detect 'enter' keypress
+      addLine();
+    } else if (e.which === 27) {
+      // detect 'esc' keypress
+      // trigger blur
+    }
   }
 
   lineChanged() {
-    this.props.updateLine(
-      this.docId(), 
-      this.props.line); 
+    this.props.updateLine(this.props.line); 
   }
 
   render() {
