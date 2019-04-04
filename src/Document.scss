@@ -4,11 +4,32 @@
   padding: 0 40px;
 }
 
+/* doc page */
+
+.doc-title-container {
+  .doc-title {}
+
+  .doc-title-heading, .edit-link {
+    display: inline;
+  }
+
+  .edit-link {
+    padding-left: 6px;
+  }
+
+  .edit-link {}
+
+  .doc-title-heading, .title-input {
+    font-size: 22px;
+    font-weight: bold;
+  }
+}
+
+
 /* table */
 
 .doc-table {
-  // temp
-  // from semantic-ui
+  // from semantic-ui (temp)
   width: 100%;
   background: #FFFFFF;
   margin: 1em 0em;

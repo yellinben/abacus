@@ -1,13 +1,30 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import {
+  updatingLine,
+  addLine
+} from '../redux/actions';
 
 class DocTableRow extends Component {
-  handleChange = (e) => {
-    const old_input = this.props.line.input;
-    const input = e.target.value;
+  docId = () => this.props.match.params.docId
 
-    if (input !== old_input) {
-      console.log('line updated', input);
+  handleChange = (e) => {
+    if (e.target.value !== this.props.line.input) {
+      this.props.line.input = e.target.value;
+      this.lineChanged();
     }
+  }
+
+  handleKeydown = (e) => {
+    // detect 'enter' or 'esc' keypress
+    if (e.which === 13 || e.which === 27) addLine();
+  }
+
+  lineChanged() {
+    this.props.updateLine(
+      this.docId(), 
+      this.props.line); 
   }
 
   render() {
@@ -17,7 +34,8 @@ class DocTableRow extends Component {
         <td className="row-input">
           <input type="text" 
             defaultValue={line.input} 
-            onBlur={this.handleChange} />
+            onBlur={this.handleChange} 
+            onKeyDown={this.handleKeydown} />
         </td>
         <td className="row-result">{line.result}</td>
       </tr>
@@ -25,4 +43,15 @@ class DocTableRow extends Component {
   }
 }
 
-export default DocTableRow;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateLine: (line) => {
+      dispatch(updatingLine(line))
+    },
+    addLine: () => {
+      dispatch(addLine())
+    }
+  }
+}
+
+export default connect(null, mapDispatchToProps)(DocTableRow);

@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import DocTableRow from '../components/DocTableRow'
+import React, { Component } from 'react';
+import DocTableRow from '../components/DocTableRow';
 
 export default class DocTable extends Component {
   render() {
