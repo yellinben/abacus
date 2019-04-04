@@ -48,6 +48,7 @@ const fetchedDocument = (document) => {
 
 const updatingLine = (line) => {
   return dispatch => {
+    console.log('updatingLine', line);
     fetch(apiURL('documents', line.document_id, 'lines', line.id), {
       method: "PATCH",
       headers: {"Content-Type": "application/json"},
@@ -68,13 +69,12 @@ const addLine = () => {
 
 const updatingDocument = (doc) => {
   return dispatch => {
+    dispatch(updatedDocument(doc));
     fetch(apiURL('documents', doc.id), {
       method: "PATCH",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(doc)
-    })
-      .then(res => res.json())
-      .then(doc => dispatch(updatedDocument(doc)))
+    });
   }
 }
 
