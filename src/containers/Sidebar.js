@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import SidebarItem from '../components/SidebarItem'
+import SidebarItem from '../components/SidebarItem';
 
 class Sidebar extends Component {
   render() {
@@ -16,7 +16,7 @@ class Sidebar extends Component {
 const mapStateToProps = state => {
   return {
     documents: state.documents
-  }
+  };
 }
 
 export default connect(mapStateToProps)(Sidebar);
