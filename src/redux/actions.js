@@ -10,7 +10,7 @@ import {
   SELECT_LINE
 } from './types'
 
-const apiURL = (...paths) => {
+export const apiURL = (...paths) => {
   const API = {
     host: "http://localhost",
     port: 3000,
@@ -22,7 +22,7 @@ const apiURL = (...paths) => {
   return paths.join('/');
 }
 
-const fetchingDocuments = () => {
+export const fetchingDocuments = () => {
   return dispatch => {
     fetch(apiURL('documents'))
       .then(res => res.json())
@@ -32,11 +32,11 @@ const fetchingDocuments = () => {
   };
 }
 
-const fetchedDocuments = (documents) => {
+export const fetchedDocuments = (documents) => {
   return {type: FETCHED_DOCUMENTS, payload: documents};
 }
 
-const fetchingDocument = (id) => {
+export const fetchingDocument = (id) => {
   return dispatch => {
     fetch(apiURL('documents', id))
       .then(res => res.json())
@@ -46,11 +46,11 @@ const fetchingDocument = (id) => {
   };
 }
 
-const fetchedDocument = (document) => {
+export const fetchedDocument = (document) => {
   return {type: FETCHED_DOCUMENT, payload: document};
 }
 
-const updatingDocument = (doc) => {
+export const updatingDocument = (doc) => {
   return dispatch => {
     dispatch(updatedDocument(doc));
     fetch(apiURL('documents', doc.id), {
@@ -61,11 +61,11 @@ const updatingDocument = (doc) => {
   }
 }
 
-const updatedDocument = (doc) => {
+export const updatedDocument = (doc) => {
   return {type: UPDATED_DOCUMENT, payload: doc};
 }
 
-const updatingLine = (line) => {
+export const updatingLine = (line) => {
   // if the id is nil or 'new'
   // then it does not exist in db yet
   if (!line.id || line.id === 'new') 
@@ -73,7 +73,6 @@ const updatingLine = (line) => {
 
   // if input text is now empty
   // we can delete the line
-
 
   return dispatch => {
     fetch(apiURL('documents', line.document_id, 'lines', line.id), {
@@ -86,7 +85,7 @@ const updatingLine = (line) => {
   }
 }
 
-const creatingLine = (line) => {
+export const creatingLine = (line) => {
   return dispatch => {
     fetch(apiURL('documents', line.document_id, 'lines'), {
       method: "POST",
@@ -98,7 +97,7 @@ const creatingLine = (line) => {
   }
 }
 
-const deletingLine = (line) => {
+export const deletingLine = (line) => {
   return dispatch => {
     fetch(apiURL('documents', line.document_id, 'lines', line.id), {
       method: "DELETE",
@@ -109,33 +108,26 @@ const deletingLine = (line) => {
   }
 }
 
-const updatedLine = (line) => {
+export const updatedLine = (line) => {
   return {type: LINE_UPDATED, payload: line};
 }
 
-const createdLine = (line) => {
+export const createdLine = (line) => {
   return {type: LINE_CREATED, payload: line};
 }
 
-const deletedLine = (line) => {
+export const deletedLine = (line) => {
   return {type: LINE_DELETED, payload: line};
 }
 
-const addLine = () => {
+export const addLine = () => {
   return {type: ADD_LINE};
 }
 
-const deleteLine = (line) => {
+export const deleteLine = (line) => {
   return {type: DELETE_LINE, payload: line};
 }
 
-const selectLine = (line) => {
+export const selectLine = (line) => {
   return {type: SELECT_LINE, payload: line};
 }
-
-export {
-  fetchingDocuments, fetchedDocuments,
-  fetchingDocument, fetchedDocument, 
-  updatingDocument, updatedDocument,
-  updatingLine, updatedLine, addLine
-};
