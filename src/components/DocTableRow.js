@@ -14,14 +14,13 @@ class DocTableRow extends Component {
     }
   }
 
-  handleKeydown = (e) => {
+  handleKeyDown = (e) => {
     if (e.which === 13) {
       // detect 'enter' keypress
-      addLine();
+      this.props.addLine();
     } else if (e.which === 27) {
       // detect 'esc' keypress
       e.target.blur();
-      // trigger blur
     }
   }
 
@@ -37,7 +36,7 @@ class DocTableRow extends Component {
           <input type="text" 
             defaultValue={line.input} 
             onBlur={this.handleChange} 
-            onKeyDown={this.handleKeydown} />
+            onKeyDown={this.handleKeyDown} />
         </td>
         <td className="row-result">{line.result}</td>
       </tr>

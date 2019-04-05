@@ -4,4 +4,9 @@ export const FETCHED_DOCUMENT = 'FETCHED_DOCUMENT';
 export const UPDATED_DOCUMENT = 'UPDATED_DOCUMENT';
 
 export const LINE_UPDATED = 'LINE_UPDATED';
+export const LINE_CREATED = 'LINE_CREATED';
+export const LINE_DELETED = 'LINE_DELETED';
+
 export const ADD_LINE = 'ADD_LINE';
+export const DELETE_LINE = 'DELETE_LINE';
+export const SELECT_LINE = 'SELECT_LINE';

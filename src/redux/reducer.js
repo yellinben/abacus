@@ -5,6 +5,7 @@ import {
   FETCHED_DOCUMENT, 
   UPDATED_DOCUMENT,
   LINE_UPDATED,
+  LINE_CREATED,
   ADD_LINE
 } from './types';
 
@@ -37,12 +38,22 @@ const documentReducer = (state = defaultDoc, action) => {
           return (l.id === line.id) ? line : l
         })
       };
+    case LINE_CREATED:
+      // line creation should only happen on newly-added last line of doc
+      // replace id-less last line with full object
+      return {
+        ...state,
+        lines: [
+          ...state.lines.slice(0,state.lines.length-1),
+          action.payload
+        ]
+      };
     case ADD_LINE:
       return {
         ...state,
         lines: [
           ...state.lines, 
-          defaultLine
+          {...defaultLine, document_id: state.id}
         ]
       };
     default:

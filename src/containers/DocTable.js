@@ -7,7 +7,10 @@ export default class DocTable extends Component {
     return (
       <table className="doc-table">
         <tbody>
-          {lines.map(line => <DocTableRow key={line.id} line={line} />)}
+          {lines.map(line => {
+            const line_key = line.id ? line.id : 'new';
+            return <DocTableRow key={line_key} line={line} />
+          })}
         </tbody>
       </table>
     )
