@@ -6,7 +6,8 @@ import {
   UPDATED_DOCUMENT,
   LINE_UPDATED,
   LINE_CREATED,
-  ADD_LINE
+  ADD_LINE,
+  LINE_DELETED
 } from './types';
 
 const documentsReducer = (state = [], action) => {
@@ -31,11 +32,18 @@ const documentReducer = (state = defaultDoc, action) => {
     case FETCHED_DOCUMENT:
       return action.payload;
     case LINE_UPDATED:
-      const line = action.payload;
       return {
         ...state,
         lines: state.lines.map(l => {
-          return (l.id === line.id) ? line : l
+          return (l.id === action.payload.id) ? 
+          action.payload : l
+        })
+      };
+    case LINE_DELETED:
+      return {
+        ...state,
+        lines: state.lines.filter(l => {
+          return (l.id !== action.payload.id);
         })
       };
     case LINE_CREATED:
@@ -44,7 +52,7 @@ const documentReducer = (state = defaultDoc, action) => {
       return {
         ...state,
         lines: [
-          ...state.lines.slice(0,state.lines.length-1),
+          ...state.lines.slice(0, state.lines.length-1),
           action.payload
         ]
       };

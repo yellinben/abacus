@@ -1,3 +1,5 @@
+import { isEmpty } from 'lodash'
+
 import { 
   FETCHED_DOCUMENTS, 
   FETCHED_DOCUMENT, 
@@ -73,6 +75,8 @@ export const updatingLine = (line) => {
 
   // if input text is now empty
   // we can delete the line
+  if (isEmpty(line.input))
+    return deletingLine(line);
 
   return dispatch => {
     fetch(apiURL('documents', line.document_id, 'lines', line.id), {
@@ -99,12 +103,11 @@ export const creatingLine = (line) => {
 
 export const deletingLine = (line) => {
   return dispatch => {
+    dispatch(deletedLine(line));
     fetch(apiURL('documents', line.document_id, 'lines', line.id), {
       method: "DELETE",
       headers: {"Content-Type": "application/json"},
-    })
-      .then(res => res.json())
-      .then(line => dispatch(deletedLine(line)));
+    }).then(res => res.json())
   }
 }
 
@@ -122,10 +125,6 @@ export const deletedLine = (line) => {
 
 export const addLine = () => {
   return {type: ADD_LINE};
-}
-
-export const deleteLine = (line) => {
-  return {type: DELETE_LINE, payload: line};
 }
 
 export const selectLine = (line) => {

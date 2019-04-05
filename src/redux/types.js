@@ -8,5 +8,4 @@ export const LINE_CREATED = 'LINE_CREATED';
 export const LINE_DELETED = 'LINE_DELETED';
 
 export const ADD_LINE = 'ADD_LINE';
-export const DELETE_LINE = 'DELETE_LINE';
 export const SELECT_LINE = 'SELECT_LINE';
