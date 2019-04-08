@@ -9,8 +9,14 @@ import DocumentContainer from './containers/DocumentContainer';
 
 class App extends Component {
   componentDidMount() {
-    this.props.fetchingDocuments();
+    this.props.fetchDocuments();
   }
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   // did our documents update?
+  //   if (this.props.docs !== prevProps.docs) {
+  //   }
+  // }
 
   render() {
     return (
@@ -25,12 +31,18 @@ class App extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = (state) => {
   return {
-    fetchingDocuments: () => {
+    docs: state.documents
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchDocuments: () => {
       dispatch(fetchingDocuments())
     }
   }
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

@@ -3,7 +3,9 @@ import { combineReducers } from "redux";
 import { 
   FETCHED_DOCUMENTS, 
   FETCHED_DOCUMENT, 
-  UPDATED_DOCUMENT,
+  DOCUMENT_CREATED,
+  DOCUMENT_UPDATED,
+  DOCUMENT_DELETED,
   LINE_UPDATED,
   LINE_CREATED,
   ADD_LINE,
@@ -14,10 +16,16 @@ const documentsReducer = (state = [], action) => {
   switch (action.type) {
     case FETCHED_DOCUMENTS:
       return action.payload;
-    case UPDATED_DOCUMENT:
-      const doc = action.payload
+    case DOCUMENT_CREATED:
+      return [...state, action.payload];
+    case DOCUMENT_UPDATED:
       return state.map(d => {
-        return (d.id === doc.id) ? doc : d;
+        return (d.id === action.payload.id) ? 
+        action.payload : d;
+      });
+    case DOCUMENT_DELETED:
+      return state.filter(d => {
+        return d.id !== action.payload.id;
       });
     default:
       return state;
@@ -43,7 +51,7 @@ const documentReducer = (state = defaultDoc, action) => {
       return {
         ...state,
         lines: state.lines.filter(l => {
-          return (l.id !== action.payload.id);
+          return l.id !== action.payload.id;
         })
       };
     case LINE_CREATED:

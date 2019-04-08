@@ -9,22 +9,22 @@
 .doc-title-container {
   .doc-title {}
 
-  .doc-title-heading, .edit-link {
-    display: inline;
+  .doc-title-heading, .doc-action {
+    display: inline-block;
   }
 
-  .edit-link {
+  .doc-action {
     padding-left: 6px;
   }
 
   .edit-link {}
+  .delete-link {}
 
   .doc-title-heading, .title-input {
     font-size: 22px;
     font-weight: bold;
   }
 }
-
 
 /* table */
 

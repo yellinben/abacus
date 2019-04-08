@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchingDocument, updatingDocument } from '../redux/actions';
+import { fetchingDocument, updatingDocument, deletingDocument } from '../redux/actions';
 
 import '../Document.scss';
 import DocTable from './DocTable';
@@ -47,6 +47,11 @@ class DocumentContainer extends Component {
     }
   }
 
+  handleDelete = (e) => {
+    this.props.deleteDocument(this.props.doc);
+    this.props.history.push('/');
+  }
+
   render() {
     const {doc} = this.props;
     return (
@@ -63,9 +68,12 @@ class DocumentContainer extends Component {
                   onKeyDown={this.handleTitleKeyDown} /> :
                 <div className="doc-title">
                   <h1 className="doc-title-heading">{doc.title}</h1>
-                  <a className="edit-link"
+                  <a className="doc-action edit-link"
                     onClick={this.handleEditTitle}
                     href="#">edit</a>
+                  <a className="doc-action delete-link"
+                    onClick={this.handleDelete}
+                    href="#">delete</a>
                 </div>
               }
             </div>
@@ -90,6 +98,9 @@ const mapDispatchToProps = dispatch => {
     },
     updateDocument: (doc) => {
       dispatch(updatingDocument(doc));
+    },
+    deleteDocument: (doc) => {
+      dispatch(deletingDocument(doc));
     }
   };
 }
