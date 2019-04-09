@@ -75,7 +75,7 @@ export const updatingDocument = (doc) => {
     fetch(apiURL('documents', doc.id), {
       method: "PATCH",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(doc)
+      body: JSON.stringify({title: doc.title})
     });
   }
 }

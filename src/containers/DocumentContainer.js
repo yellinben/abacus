@@ -69,12 +69,14 @@ class DocumentContainer extends Component {
           <h3>Loading</h3> :
           <Fragment>
             <div className="doc-title-container">
-              {this.state.editingTitle ? 
-                <input type="text"
-                  className="title-input"
-                  defaultValue={doc.title} 
-                  onBlur={this.handleTitleBlur} 
-                  onKeyDown={this.handleTitleKeyDown} /> :
+              {this.state.editingTitle ?
+                <div className="ui input">
+                  <input type="text"
+                    className="title-input"
+                    defaultValue={doc.title} 
+                    onBlur={this.handleTitleBlur} 
+                    onKeyDown={this.handleTitleKeyDown} />
+                </div> :
                 <div className="doc-title">
                   <h1 className="doc-title-heading">{doc.title}</h1>
                   <a className="doc-action edit-link"
