@@ -1,7 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchingDocument, updatingDocument, deletingDocument } from '../redux/actions';
+import { 
+  fetchingDocument, 
+  updatingDocument, 
+  deletingDocument,
+  toggleDebug
+} from '../redux/actions';
 
 import '../Document.scss';
 import DocTable from './DocTable';
@@ -53,7 +58,7 @@ class DocumentContainer extends Component {
   }
 
   handleDebug = (e) => {
-    
+    this.props.toggleDebug();
   }
 
   render() {
@@ -108,6 +113,9 @@ const mapDispatchToProps = dispatch => {
     },
     deleteDocument: (doc) => {
       dispatch(deletingDocument(doc));
+    },
+    toggleDebug: () => {
+      dispatch(toggleDebug());
     }
   };
 }

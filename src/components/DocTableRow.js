@@ -53,16 +53,25 @@ class DocTableRow extends Component {
     return (
       <tr className={`doc-table-row ${modeClass}`}>
         <td className="row-input">
-          <input type="text" 
-            defaultValue={line.input} 
-            onBlur={this.handleChange} 
-            onFocus={this.handleFocus}
-            onKeyDown={this.handleKeyDown} />
+          {this.props.debug ?
+            line.expression :
+            <input type="text" 
+              defaultValue={line.input} 
+              onBlur={this.handleChange} 
+              onFocus={this.handleFocus}
+              onKeyDown={this.handleKeyDown} />
+          }
         </td>
         <td className="row-result">{line.result}</td>
       </tr>
     )
   }
+}
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    debug: state.config.debug
+  };
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -76,4 +85,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(DocTableRow);
+export default connect(mapStateToProps, mapDispatchToProps)(DocTableRow);

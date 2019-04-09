@@ -10,7 +10,8 @@ import {
   LINE_UPDATED,
   LINE_DELETED,
   ADD_LINE,
-  SELECT_LINE
+  SELECT_LINE,
+  TOGGLE_DEBUG
 } from './types'
 
 export const apiURL = (...paths) => {
@@ -160,4 +161,8 @@ export const addLine = () => {
 
 export const selectLine = (line) => {
   return {type: SELECT_LINE, payload: line};
+}
+
+export const toggleDebug = () => {
+  return {type: TOGGLE_DEBUG};
 }

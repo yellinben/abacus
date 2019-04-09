@@ -9,7 +9,8 @@ import {
   LINE_UPDATED,
   LINE_CREATED,
   ADD_LINE,
-  LINE_DELETED
+  LINE_DELETED,
+  TOGGLE_DEBUG
 } from './types';
 
 const documentsReducer = (state = [], action) => {
@@ -77,9 +78,23 @@ const documentReducer = (state = defaultDoc, action) => {
   }
 }
 
+const defaultConfig = {
+  debug: false
+};
+
+const configReducer = (state = defaultConfig, action) => {
+  switch (action.type) {
+    case TOGGLE_DEBUG:
+      return {...state, debug: !state.debug};
+    default:
+      return state;
+  }
+}
+
 const rootReducer = combineReducers({
   documents: documentsReducer,
-  document: documentReducer
+  document: documentReducer,
+  config: configReducer
 });
 
 export default rootReducer;

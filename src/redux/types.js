@@ -11,3 +11,5 @@ export const LINE_DELETED = 'LINE_DELETED';
 
 export const ADD_LINE = 'ADD_LINE';
 export const SELECT_LINE = 'SELECT_LINE';
+
+export const TOGGLE_DEBUG = 'TOGGLE_DEBUG';
