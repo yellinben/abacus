@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { isEmpty } from 'lodash';
 
 import {
   updatingLine,
+  deletingLine,
   addLine
 } from '../redux/actions';
 
@@ -37,8 +39,14 @@ class DocTableRow extends Component {
     } else if (e.which === 40) {
       // detect 'down' keypress
       // select next line
+    } else if (e.which === 8) {
+      // detect 'backspace' keypress
+      // if line is empty
+      // delete the line
+      if (isEmpty(this.props.line.input))
+        this.props.deleteLine(this.props.line)
     } else {
-      // console.log('keydown', e.which);
+      console.log('keydown', e.which);
     }
   }
 
@@ -78,6 +86,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     updateLine: (line) => {
       dispatch(updatingLine(line))
+    },
+    deleteLine: (line) => {
+      dispatch(deletingLine(line))
     },
     addLine: () => {
       dispatch(addLine())
