@@ -4,8 +4,13 @@ import { withRouter, Route } from 'react-router-dom';
 
 import { fetchingDocuments } from './redux/actions'
 
+import { Grid, Container } from 'semantic-ui-react';
+
 import Sidebar from './containers/Sidebar';
+import Header from './containers/Header';
 import DocumentContainer from './containers/DocumentContainer';
+
+import './App.scss'
 
 class App extends Component {
   componentDidMount() {
@@ -20,12 +25,18 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <Route path="/" 
-          component={Sidebar} />
-        <Route exact
-          path="/documents/:docId"
-          component={DocumentContainer} />
+      <div className="app-container">
+        <Grid container columns={12}>
+          <Grid.Column width={3}>
+            <Route path="/" 
+              component={Sidebar} />
+          </Grid.Column>
+          <Grid.Column width={12}>
+            <Route exact
+              path="/documents/:docId"
+              component={DocumentContainer} />
+          </Grid.Column>
+        </Grid>
       </div>
     );
   }

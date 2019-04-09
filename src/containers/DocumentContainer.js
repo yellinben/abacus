@@ -52,6 +52,10 @@ class DocumentContainer extends Component {
     this.props.history.push('/');
   }
 
+  handleDebug = (e) => {
+    
+  }
+
   render() {
     const {doc} = this.props;
     return (
@@ -74,6 +78,9 @@ class DocumentContainer extends Component {
                   <a className="doc-action delete-link"
                     onClick={this.handleDelete}
                     href="#">delete</a>
+                  <a className="doc-action debug-link"
+                    onClick={this.handleDebug}
+                    href="#">debug</a>
                 </div>
               }
             </div>

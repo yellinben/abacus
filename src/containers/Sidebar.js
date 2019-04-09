@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { Menu } from 'semantic-ui-react';
+import { NavLink } from 'react-router-dom';
+
 import SidebarItem from '../components/SidebarItem';
 import { creatingDocument } from '../redux/actions';
 
@@ -13,16 +16,22 @@ class Sidebar extends Component {
   render() {
     return (
       <div className="sidebar">
-        <ul>{this.props.documents.map(doc => {
-          return <SidebarItem key={doc.id} doc={doc} />
-        })}</ul>
-        <div className="sidebar-actions">
-          <a href="#" 
-            onClick={this.handleNew}
-            className="sidebar-action new-link">
-            New Document
-          </a>
-        </div>
+        <Menu vertical>
+          <Menu.Item>
+            <Menu.Header>Documents</Menu.Header>
+            <Menu.Menu>
+              {this.props.documents.map(doc => {
+                return <Menu.Item as={NavLink} 
+                  to={`/documents/${doc.id}`}
+                  key={doc.id} name={doc.title} />
+              })}
+            </Menu.Menu>
+          </Menu.Item>
+          <Menu.Item 
+            className="sidebar-action new-link"
+            onClick={this.handleNew} 
+            name="New Document" />
+        </Menu>
       </div>
     );
   }

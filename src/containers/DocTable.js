@@ -5,14 +5,14 @@ export default class DocTable extends Component {
   render() {
     const {lines} = this.props;
     return (
-      <table className="doc-table">
-        <tbody>
+      <div className="doc-table-container">
+        <table className="doc-table"><tbody>
           {lines.map(line => {
             const line_key = line.id ? line.id : 'new';
             return <DocTableRow key={line_key} line={line} />
           })}
-        </tbody>
-      </table>
+        </tbody></table>
+      </div>
     )
   }
 }

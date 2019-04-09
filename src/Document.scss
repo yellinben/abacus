@@ -28,12 +28,16 @@
 
 /* table */
 
+.doc-table-container {
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  min-height: 60vh;
+}
+
 .doc-table {
   // from semantic-ui (temp)
   width: 100%;
   background: #FFFFFF;
-  margin: 1em 0em;
-  border: 1px solid rgba(34, 36, 38, 0.15);
+  // margin: 1em 0em;
   box-shadow: none;
   border-radius: 0.28571429rem;
   text-align: left;
@@ -50,7 +54,7 @@
   .doc-table-row {}
 
   td { 
-    border-bottom: 1px solid rgba(34,36,38,.1);
+    // border-bottom: 1px solid rgba(34,36,38,.1);
     font-size: $row-font-size;
     font-weight: $row-font-weight;
   }
@@ -64,6 +68,10 @@
       border: none;
       font-size: $row-font-size;
       font-weight: $row-font-weight;
+
+      &:focus {
+        outline: none;
+      }
     }
   }
 
@@ -71,5 +79,15 @@
     background: #e0e0e0;
     text-align: left;
     padding: $row-pad-top ($row-pad-side * 2); 
+  }
+
+  .mode-calculation {}
+
+  .mode-comment {
+    input {opacity: 0.4;}
+  }
+
+  .mode-invalid {
+    input {color: red;}
   }
 }
