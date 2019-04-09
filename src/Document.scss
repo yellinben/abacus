@@ -29,7 +29,6 @@
 /* table */
 
 .doc-table-container {
-  border: 1px solid rgba(34, 36, 38, 0.15);
   min-height: 60vh;
 }
 
@@ -39,7 +38,9 @@
   background: #FFFFFF;
   // margin: 1em 0em;
   box-shadow: none;
-  border-radius: 0.28571429rem;
+  // border-radius: 0.28571429rem;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-bottom: none;
 
   border-collapse: separate;
   border-spacing: 0px;
@@ -91,6 +92,7 @@
 
   .row-result {
     background: lighten(#e0e0e0, 5%);
+    border-left: 1px solid rgba(38, 38, 38, 0.15);
     text-align: left;
     padding: $row-pad-top ($row-pad-side * 2); 
   }
