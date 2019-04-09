@@ -15,3 +15,60 @@
 
 // .column { outline: 1px solid green; }
 // .column .column { outline-color: purple; }
+
+/* colors */
+
+$bg: #FCF9F0 !default;
+$bg-alt: #EDE9DD !default;
+
+$fg: #282723 !default;
+
+$orange: #EB731A !default;
+$burnt-orange: #E5501A !default;
+$light-orange: #F6A635 !default;
+$red: #BC3732 !default;
+
+$blue: #5C7FB7 !default;
+$purple: #886AD5 !default;
+$dark-purple: #191737 !default;
+
+$gray: #A7ACB0 !default;
+
+$green: #A7ACB0 !default;
+$yellow: #FDE15C !default;
+
+/* font */
+
+$font-heading: "Roboto Slab" !default;
+$font-mono: "Roboto Mono" !default;
+
+$font-family-heading: $font-heading, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif !default;
+$font-family-mono: $font-mono, Menlo, Monaco, "Courier New", "Courier", monospace !default;
+
+/* base */
+
+html, body {
+  // font-family: $font-family !important;
+  background: $bg;
+  color: $fg;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-heading !important;
+  color: $fg;
+}
+
+// .ui {
+//   font-family: $font-family !important;
+// }
+
+/* font */
+
+.doc-table {
+  font-family: $font-family-mono;
+  background: $bg-alt;
+}
+
+.row-input * {
+  font-family: $font-family-mono;
+}

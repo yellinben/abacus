@@ -40,10 +40,19 @@
   // margin: 1em 0em;
   box-shadow: none;
   border-radius: 0.28571429rem;
-  text-align: left;
-  color: rgba(0, 0, 0, 0.87);
+
   border-collapse: separate;
   border-spacing: 0px;
+
+  text-align: left;
+  color: rgba(0, 0, 0, 0.87);
+  // font-family: $font-family-mono;
+
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2),
+    0 8px 0 -3px #f6f6f6,
+    0 9px 1px -3px rgba(0, 0, 0, 0.2),
+    0 16px 0 -6px #f6f6f6,
+    0 17px 2px -6px rgba(0, 0, 0, 0.2);
 
   $row-font-size: 18px;
   $row-font-weight: normal;
@@ -68,6 +77,7 @@
       border: none;
       font-size: $row-font-size;
       font-weight: $row-font-weight;
+      // font-family: $font-family-mono;
 
       &:focus {
         outline: none;
@@ -80,7 +90,7 @@
   }
 
   .row-result {
-    background: #e0e0e0;
+    background: lighten(#e0e0e0, 5%);
     text-align: left;
     padding: $row-pad-top ($row-pad-side * 2); 
   }
