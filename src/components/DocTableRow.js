@@ -31,7 +31,7 @@ class DocTableRow extends Component {
       this.textField.current.focus();
   }
 
-  handleChange = (e) => {
+  handleBlur = (e) => {
     if (e.target.value !== this.props.line.input) {
       this.props.line.input = e.target.value;
       this.lineChanged();
@@ -84,16 +84,12 @@ class DocTableRow extends Component {
     return (
       <tr className={`doc-table-row ${modeClass}`}>
         <td className="row-input">
-          {this.props.debug ?
-            <input type="text" 
-              ref={this.textField}
-              defaultValue={line.expression} /> :
             <input type="text" 
               ref={this.textField}
               defaultValue={line.input}
-              onBlur={this.handleChange} 
+              onBlur={this.handleBlur}
               onFocus={this.handleFocus}
-              onKeyDown={this.handleKeyDown} /> }
+              onKeyDown={this.handleKeyDown} />
         </td>
         <td className="row-result">
           {line.result ? <CopyCell text={line.result} /> : null}
