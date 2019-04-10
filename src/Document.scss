@@ -87,6 +87,10 @@
     font-weight: $row-font-weight;
   }
 
+  .row-input input, .row-expression, .row-result {
+    line-height: 1;
+  }
+
   .row-input {
     text-align: center;
 
@@ -112,7 +116,7 @@
     background: lighten(#e0e0e0, 5%);
     border-left: 1px solid rgba(38, 38, 38, 0.15);
     text-align: left;
-    padding: $row-pad-top ($row-pad-side * 2); 
+    padding: $row-pad-top ($row-pad-side / 2); 
   }
 
   .mode-calculation {}
