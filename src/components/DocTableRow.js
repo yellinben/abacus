@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { isEmpty } from 'lodash';
 
 import {
   updatingLine,
@@ -16,6 +15,7 @@ class DocTableRow extends Component {
   constructor(props) {
     super(props);
     this.textField = React.createRef();
+    this.state = {lineInput: props.line.input};
   }
 
   // componentWillUpdate(nextProps, nextState) {
@@ -32,10 +32,9 @@ class DocTableRow extends Component {
   }
 
   handleBlur = (e) => {
-    if (e.target.value !== this.props.line.input) {
-      this.props.line.input = e.target.value;
+    if (this.props.line.input !== this.state.lineInput)
       this.lineChanged();
-    }
+    // this.state.line.input = e.target.value;
   }
 
   // automatically move cursor to end of input on focus
@@ -47,7 +46,7 @@ class DocTableRow extends Component {
     //   input.setSelectionRange(length, length);
     // }, 0);
 
-    this.props.lineSelected(this.props.line);
+    this.props.lineSelected(this.state.line);
   }
 
   handleKeyDown = (e) => {
@@ -65,34 +64,49 @@ class DocTableRow extends Component {
       this.props.selectNextLine();
     } else if (e.which === 8) {
       // detect 'backspace' keypress
-      if (isEmpty(this.props.line.input))
-        this.props.deleteLine(this.props.line)
+      // if backspace occurs at start of line
+      // delete the entire line
+      if (!this.state.lineInput.length)
+        this.props.deleteLine(this.props.line);
     } else {
-      console.log('keydown', e.which);
+      // console.log('keydown', e.which);
     }
   }
 
+  handleChange = (e) => {
+    this.setState({[e.target.name]: e.target.value});
+    // this.setState({lineInput: e.target.value});
+    // console.log(this.state.lineInput);
+  }
+
   lineChanged() {
-    this.props.updateLine(this.props.line); 
+    this.props.updateLine({
+      ...this.props.line,
+      input: this.state.lineInput
+    }); 
   }
 
   render() {
     const {line} = this.props;
     const modeClass = `mode-${line.mode}`
-    const lineText = this.props.debug ? line.expression : line.input;
+    // const lineText = this.props.debug ? line.expression : line.input;
 
     return (
       <tr className={`doc-table-row ${modeClass}`}>
         <td className="row-input">
             <input type="text" 
+              name="lineInput"
+              autoComplete="off" 
               ref={this.textField}
-              defaultValue={line.input}
+              defaultValue={this.state.lineInput}
+              onChange={this.handleChange}
               onBlur={this.handleBlur}
               onFocus={this.handleFocus}
               onKeyDown={this.handleKeyDown} />
         </td>
         <td className="row-result">
-          {line.result ? <CopyCell text={line.result} /> : null}
+          {!line.result ? null :
+            <CopyCell text={line.result} />}
         </td>
       </tr>
     )
