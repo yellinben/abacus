@@ -14,6 +14,7 @@ import DocTable from './DocTable';
 class DocumentContainer extends Component {
   constructor(props) {
     super(props);
+    this.titleField = React.createRef();
     this.state = {
       editingTitle: false
     }
@@ -42,7 +43,9 @@ class DocumentContainer extends Component {
   }
 
   toggleEditTitle(flag = !this.state.editingTitle) {
-    this.setState({editingTitle: flag});
+    this.setState({editingTitle: flag}, () => {
+      if (flag) this.titleField.current.focus();
+    });
   }
 
   setTitle(title) {
@@ -72,13 +75,17 @@ class DocumentContainer extends Component {
               {this.state.editingTitle ?
                 <div className="ui input">
                   <input type="text"
+                    ref={this.titleField}
                     className="title-input"
                     defaultValue={doc.title} 
                     onBlur={this.handleTitleBlur} 
                     onKeyDown={this.handleTitleKeyDown} />
                 </div> :
                 <div className="doc-title">
-                  <h1 className="doc-title-heading">{doc.title}</h1>
+                  <h1 className="doc-title-heading"
+                    onClick={this.handleEditTitle}>
+                    {doc.title}
+                  </h1>
                   <div className="doc-title-actions">
                     <a className="doc-action edit-link"
                       onClick={this.handleEditTitle}
