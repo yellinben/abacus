@@ -76,8 +76,8 @@
   $row-font-size: 18px;
   $row-font-weight: normal;
 
-  $row-pad-top: 10px;
-  $row-pad-side: 8px;
+  $row-pad-top: 8px;
+  $row-pad-side: 10px;
 
   .doc-table-row {}
 
@@ -116,16 +116,17 @@
     background: lighten(#e0e0e0, 5%);
     border-left: 1px solid rgba(38, 38, 38, 0.15);
     text-align: left;
-    padding: $row-pad-top ($row-pad-side / 2); 
+    padding: $row-pad-top ($row-pad-side * 0.6); 
   }
 
   .mode-calculation {}
 
   .mode-comment {
-    input {opacity: 0.4;}
+    // input {opacity: 0.4;}
+    input {color: #A7ACB0;}
   }
 
   .mode-invalid {
-    input {color: red;}
+    input {color: saturate(#BC3732, 10%);}
   }
 }

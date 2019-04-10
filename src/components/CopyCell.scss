@@ -1,6 +1,6 @@
 .copy-cell {
   display: inline-block;
-  padding: 3px 6px;
+  padding: 3px 4px;
 
   border-radius: 5px;
   border: 1px solid transparent;
@@ -13,14 +13,11 @@
 
   &:hover {
     border-color: rgba(0, 0, 0, 0.3);
-    // background: #999;
-    // color: #fff;
   }
 
   &:active {
     background: rgba(0, 0, 0, 0.15);
     border-color: rgba(0, 0, 0, 0.45);
-    // color: #fff;
     user-select: none;
   }
 }
