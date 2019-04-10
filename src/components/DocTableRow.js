@@ -18,14 +18,6 @@ class DocTableRow extends Component {
     this.state = {lineInput: props.line.input};
   }
 
-  // componentWillUpdate(nextProps, nextState) {
-
-  // }
-
-  // shouldComponentUpdate(nextProps, nextState, nextContext) {
-  //   return nextProps.
-  // }
-
   componentDidUpdate() {
     if (this.props.selected)
       this.textField.current.focus();
@@ -34,7 +26,6 @@ class DocTableRow extends Component {
   handleBlur = (e) => {
     if (this.props.line.input !== this.state.lineInput)
       this.lineChanged();
-    // this.state.line.input = e.target.value;
   }
 
   // automatically move cursor to end of input on focus
@@ -75,8 +66,6 @@ class DocTableRow extends Component {
 
   handleChange = (e) => {
     this.setState({[e.target.name]: e.target.value});
-    // this.setState({lineInput: e.target.value});
-    // console.log(this.state.lineInput);
   }
 
   lineChanged() {
@@ -89,7 +78,6 @@ class DocTableRow extends Component {
   render() {
     const {line} = this.props;
     const modeClass = `mode-${line.mode}`
-    // const lineText = this.props.debug ? line.expression : line.input;
 
     return (
       <tr className={`doc-table-row ${modeClass}`}>
