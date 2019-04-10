@@ -10,15 +10,21 @@ import {
   selectedLine
 } from '../redux/actions';
 
+import CopyCell from './CopyCell';
+
 class DocTableRow extends Component {
   constructor(props) {
     super(props);
     this.textField = React.createRef();
   }
 
-  componentWillUpdate(nextProps, nextState) {
+  // componentWillUpdate(nextProps, nextState) {
 
-  }
+  // }
+
+  // shouldComponentUpdate(nextProps, nextState, nextContext) {
+  //   return nextProps.
+  // }
 
   componentDidUpdate() {
     if (this.props.selected)
@@ -26,7 +32,7 @@ class DocTableRow extends Component {
   }
 
   handleChange = (e) => {
-    if (!this.props.debug && e.target.value !== this.props.line.input) {
+    if (e.target.value !== this.props.line.input) {
       this.props.line.input = e.target.value;
       this.lineChanged();
     }
@@ -78,15 +84,20 @@ class DocTableRow extends Component {
     return (
       <tr className={`doc-table-row ${modeClass}`}>
         <td className="row-input">
-          <input type="text" 
-            ref={this.textField}
-            value={lineText} 
-            onChange={this.handleChange} 
-            onBlur={this.handleChange} 
-            onFocus={this.handleFocus}
-            onKeyDown={this.handleKeyDown} />
+          {this.props.debug ?
+            <input type="text" 
+              ref={this.textField}
+              defaultValue={line.expression} /> :
+            <input type="text" 
+              ref={this.textField}
+              defaultValue={line.input}
+              onBlur={this.handleChange} 
+              onFocus={this.handleFocus}
+              onKeyDown={this.handleKeyDown} /> }
         </td>
-        <td className="row-result">{line.result}</td>
+        <td className="row-result">
+          {line.result ? <CopyCell text={line.result} /> : null}
+        </td>
       </tr>
     )
   }
@@ -95,6 +106,7 @@ class DocTableRow extends Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     debug: state.config.debug,
+    text: state.config.debug ? ownProps.line.expression : ownProps.line.input,
     selected: state.document.selectedLineIndex === ownProps.index
   };
 }
