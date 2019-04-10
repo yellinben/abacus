@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { clamp } from 'lodash';
 
 import { 
   FETCHED_DOCUMENTS, 
@@ -87,11 +86,7 @@ const documentReducer = (state = defaultDoc, action) => {
         index = state.lines.length-1;
       else if (index >= state.lines.length)
         index = 0
-        
-      // index = (index < 0) ? state.lines.length-1 : index;
-      // clamp(index, 0, state.lines.length-1);
 
-      console.log('LINE_SELECTED', index);
       return {...state, selectedLineIndex: index};
     case SELECT_LINE_RELATIVE:
       index = (state.selectedLineIndex || 0) + action.payload;
@@ -100,9 +95,7 @@ const documentReducer = (state = defaultDoc, action) => {
         index = state.lines.length-1;
       else if (index >= state.lines.length)
         index = 0
-        
-      // index = (index > states.lines.length) ? 0 : clamp(index, 0, state.lines.length-1);
-      console.log('SELECT_LINE_RELATIVE', index);
+
       return {...state, selectedLineIndex: index};
     default:
       return state;
