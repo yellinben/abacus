@@ -1,23 +1,17 @@
 import React, { Component } from 'react'
+import copy from 'copy-to-clipboard';
 
 import './CopyCell.scss';
 
 export default class CopyCell extends Component {
-  handleClick = (e) => {
-    console.log('click', e.target, e.currentTarget);
-    // copyText(e.target);
-    // e.currentTarget.select();
-    // document.execCommand('copy');
-  }
-
-  copyText(elem) {
-    
+  handleCopy = (e) => {
+    copy(this.props.text, {debug: true}); 
   }
 
   render() {
     return (
       <span className="copy-cell"
-        onClick={this.handleClick}>
+        onDoubleClick={this.handleCopy}>
         {this.props.text}
       </span>
     )
