@@ -79,11 +79,13 @@ class DocumentContainer extends Component {
                 </div> :
                 <div className="doc-title">
                   <h1 className="doc-title-heading">{doc.title}</h1>
-                  <a className="doc-action edit-link"
-                    onClick={this.handleEditTitle}
-                    href="#">edit</a>
-                  <a className="doc-action delete-link"
-                    href="#">delete</a>
+                  <div className="doc-title-actions">
+                    <a className="doc-action edit-link"
+                      onClick={this.handleEditTitle}
+                      href="#">edit</a>
+                    <a className="doc-action delete-link"
+                      href="#">delete</a>
+                  </div>
                 </div>
               }
             </div>

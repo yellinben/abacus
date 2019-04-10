@@ -7,7 +7,17 @@
 /* doc page */
 
 .doc-title-container {
-  .doc-title {}
+  .doc-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 6px;
+  }
+
+  .doc-title-heading {
+    padding: 0;
+    margin: 0;
+  }
 
   .doc-title-heading, .doc-action {
     display: inline-block;
@@ -23,6 +33,14 @@
   .doc-title-heading, .title-input {
     font-size: 22px;
     font-weight: bold;
+  }
+
+  .input {
+    margin-bottom: 6px;
+  }
+
+  .input .title-input {
+    padding: 5px;
   }
 }
 
