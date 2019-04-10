@@ -49,10 +49,10 @@ class DocTableRow extends Component {
       e.target.blur();
     } else if (e.which === 38) {
       // detect 'up' keypress
-      this.props.selectPrevLine();
+      this.props.selectPrevLine(this.props.index);
     } else if (e.which === 40) {
       // detect 'down' keypress
-      this.props.selectNextLine();
+      this.props.selectNextLine(this.props.index);
     } else if (e.which === 8) {
       // detect 'backspace' keypress
       // if backspace occurs at start of line
@@ -120,11 +120,11 @@ const mapDispatchToProps = (dispatch) => {
     addLine: () => {
       dispatch(addLine())
     },
-    selectPrevLine: () => {
-      dispatch(selectLineRelative(-1))
+    selectPrevLine: (currentIndex) => {
+      dispatch(selectLineRelative(currentIndex, -1))
     },
-    selectNextLine: () => {
-      dispatch(selectLineRelative(1))
+    selectNextLine: (currentIndex) => {
+      dispatch(selectLineRelative(currentIndex, 1))
     },
     lineSelected: (line) => {
       dispatch(selectedLine(line))

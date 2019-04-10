@@ -9,7 +9,6 @@ import { creatingDocument } from '../redux/actions';
 
 class Sidebar extends Component {
   handleNew = (e) => {
-    console.log('new');
     this.props.createDocument();
   }
 

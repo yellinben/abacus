@@ -79,18 +79,23 @@ const documentReducer = (state = defaultDoc, action) => {
           {...defaultLine, document_id: state.id}
         ]
       };
-    case LINE_SELECTED:
-      index = state.lines.indexOf(action.payload);
+    // case LINE_SELECTED:
+    //   index = state.lines.indexOf(action.payload);
       
-      if (index < 0)
-        index = state.lines.length-1;
-      else if (index >= state.lines.length)
-        index = 0
+    //   if (index < 0)
+    //     index = state.lines.length-1;
+    //   else if (index >= state.lines.length)
+    //     index = 0
 
-      return {...state, selectedLineIndex: index};
+    //   return {...state, selectedLineIndex: index};
     case SELECT_LINE_RELATIVE:
-      index = (state.selectedLineIndex || 0) + action.payload;
-      
+      // console.log(state.selectedLineIndex)
+      // index = (state.selectedLineIndex || 0) + action.payload;
+      // console.log('index1', index)
+
+      const {currentIndex, relativeIndex} = action.payload
+      index = currentIndex + relativeIndex;
+
       if (index < 0)
         index = state.lines.length-1;
       else if (index >= state.lines.length)

@@ -91,6 +91,7 @@ class DocumentContainer extends Component {
                       onClick={this.handleEditTitle}
                       href="#">edit</a>
                     <a className="doc-action delete-link"
+                      onClick={this.handleDelete}
                       href="#">delete</a>
                   </div>
                 </div>

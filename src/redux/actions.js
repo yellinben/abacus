@@ -29,14 +29,15 @@ export const apiURL = (...paths) => {
 }
 
 export const creatingDocument = () => {
-  // return dispatch => {
-  //   fetch(apiURL('documents'), {method: "POST"})
-  //     .then(res => res.json())
-  //     .then(doc => {
-  //       dispatch(createdDocument(doc));
-  //     });
-  // }
-  return {action: 'DOCUMENT_CREATING'};
+  return dispatch => {
+    // console.log('creatingDocument');
+    fetch(apiURL('documents'), {method: "POST"})
+      .then(res => res.json())
+      .then(doc => {
+        // console.log('doc', doc);
+        dispatch(createdDocument(doc));
+      });
+  }
 }
 
 export const createdDocument = (doc) => {
@@ -169,8 +170,10 @@ export const selectLine = (line) => {
   return {type: SELECT_LINE, payload: line};
 }
 
-export const selectLineRelative = (relativeIndex) => {
-  return {type: SELECT_LINE_RELATIVE, payload: relativeIndex};
+export const selectLineRelative = (currentIndex, relativeIndex) => {
+  return {type: SELECT_LINE_RELATIVE, payload: {
+    currentIndex, relativeIndex
+  }};
 }
 
 export const toggleDebug = () => {

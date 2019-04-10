@@ -15,7 +15,7 @@ import './App.scss'
 class App extends Component {
   componentDidMount() {
     this.props.fetchDocuments();
-    console.log(this.props.history);
+    // console.log(this.props.history);
   }
 
   // componentDidUpdate(prevProps, prevState) {

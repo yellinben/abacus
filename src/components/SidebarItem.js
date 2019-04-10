@@ -5,9 +5,7 @@ const SidebarItem = (props) => {
   const {doc} = props;
   return (
     <li>
-      <Link to={`/documents/${doc.id}`}>
-        {doc.title}
-      </Link>
+      <a href={`/documents/${doc.id}`}>{doc.title}</a>
     </li>
   );
 }
