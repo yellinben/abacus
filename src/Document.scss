@@ -82,7 +82,6 @@
   .doc-table-row {}
 
   td { 
-    // border-bottom: 1px solid rgba(34,36,38,.1);
     font-size: $row-font-size;
     font-weight: $row-font-weight;
   }
@@ -93,6 +92,7 @@
 
   .row-input {
     text-align: center;
+    width: 65%;
 
     input {
       width: 99%;
@@ -100,7 +100,6 @@
       border: none;
       font-size: $row-font-size;
       font-weight: $row-font-weight;
-      // font-family: $font-family-mono;
 
       &:focus {
         outline: none;
