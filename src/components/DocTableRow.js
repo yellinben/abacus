@@ -5,12 +5,28 @@ import { isEmpty } from 'lodash';
 import {
   updatingLine,
   deletingLine,
-  addLine
+  addLine,
+  selectLineRelative,
+  selectedLine
 } from '../redux/actions';
 
 class DocTableRow extends Component {
+  constructor(props) {
+    super(props);
+    this.textField = React.createRef();
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+
+  }
+
+  componentDidUpdate() {
+    if (this.props.selected)
+      this.textField.current.focus();
+  }
+
   handleChange = (e) => {
-    if (e.target.value !== this.props.line.input) {
+    if (!this.props.debug && e.target.value !== this.props.line.input) {
       this.props.line.input = e.target.value;
       this.lineChanged();
     }
@@ -18,12 +34,14 @@ class DocTableRow extends Component {
 
   // automatically move cursor to end of input on focus
   handleFocus = (e) => {
-    const input = e.target;
-    const length = input.value.length;
-    // console.log('handleFocus', length);
-    setTimeout(() => {
-      input.setSelectionRange(length, length);
-    }, 0);
+    // const input = e.target;
+    // const length = input.value.length;
+
+    // setTimeout(() => {
+    //   input.setSelectionRange(length, length);
+    // }, 0);
+
+    this.props.lineSelected(this.props.line);
   }
 
   handleKeyDown = (e) => {
@@ -35,14 +53,12 @@ class DocTableRow extends Component {
       e.target.blur();
     } else if (e.which === 38) {
       // detect 'up' keypress
-      // select previous line
+      this.props.selectPrevLine();
     } else if (e.which === 40) {
       // detect 'down' keypress
-      // select next line
+      this.props.selectNextLine();
     } else if (e.which === 8) {
       // detect 'backspace' keypress
-      // if line is empty
-      // delete the line
       if (isEmpty(this.props.line.input))
         this.props.deleteLine(this.props.line)
     } else {
@@ -57,18 +73,18 @@ class DocTableRow extends Component {
   render() {
     const {line} = this.props;
     const modeClass = `mode-${line.mode}`
+    const lineText = this.props.debug ? line.expression : line.input;
 
     return (
       <tr className={`doc-table-row ${modeClass}`}>
         <td className="row-input">
-          {this.props.debug ?
-            line.expression :
-            <input type="text" 
-              defaultValue={line.input} 
-              onBlur={this.handleChange} 
-              onFocus={this.handleFocus}
-              onKeyDown={this.handleKeyDown} />
-          }
+          <input type="text" 
+            ref={this.textField}
+            value={lineText} 
+            onChange={this.handleChange} 
+            onBlur={this.handleChange} 
+            onFocus={this.handleFocus}
+            onKeyDown={this.handleKeyDown} />
         </td>
         <td className="row-result">{line.result}</td>
       </tr>
@@ -78,7 +94,8 @@ class DocTableRow extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    debug: state.config.debug
+    debug: state.config.debug,
+    selected: state.document.selectedLineIndex === ownProps.index
   };
 }
 
@@ -92,6 +109,15 @@ const mapDispatchToProps = (dispatch) => {
     },
     addLine: () => {
       dispatch(addLine())
+    },
+    selectPrevLine: () => {
+      dispatch(selectLineRelative(-1))
+    },
+    selectNextLine: () => {
+      dispatch(selectLineRelative(1))
+    },
+    lineSelected: (line) => {
+      dispatch(selectedLine(line))
     }
   }
 }

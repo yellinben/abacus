@@ -1,4 +1,5 @@
-import { combineReducers } from "redux";
+import { combineReducers } from 'redux';
+import { clamp } from 'lodash';
 
 import { 
   FETCHED_DOCUMENTS, 
@@ -8,8 +9,11 @@ import {
   DOCUMENT_DELETED,
   LINE_UPDATED,
   LINE_CREATED,
-  ADD_LINE,
+  LINE_SELECTED,
   LINE_DELETED,
+  ADD_LINE,
+  SELECT_LINE,
+  SELECT_LINE_RELATIVE,
   TOGGLE_DEBUG
 } from './types';
 
@@ -37,9 +41,12 @@ const defaultDoc = {lines: []};
 const defaultLine = {input: ''};
 
 const documentReducer = (state = defaultDoc, action) => {
+  let index;
+
   switch (action.type) {
     case FETCHED_DOCUMENT:
-      return action.payload;
+      return {...action.payload, 
+        selectedLineIndex: 0};
     case LINE_UPDATED:
       return {
         ...state,
@@ -73,10 +80,47 @@ const documentReducer = (state = defaultDoc, action) => {
           {...defaultLine, document_id: state.id}
         ]
       };
+    case LINE_SELECTED:
+      index = state.lines.indexOf(action.payload);
+      
+      if (index < 0)
+        index = state.lines.length-1;
+      else if (index >= state.lines.length)
+        index = 0
+        
+      // index = (index < 0) ? state.lines.length-1 : index;
+      // clamp(index, 0, state.lines.length-1);
+
+      console.log('LINE_SELECTED', index);
+      return {...state, selectedLineIndex: index};
+    case SELECT_LINE_RELATIVE:
+      index = (state.selectedLineIndex || 0) + action.payload;
+      
+      if (index < 0)
+        index = state.lines.length-1;
+      else if (index >= state.lines.length)
+        index = 0
+        
+      // index = (index > states.lines.length) ? 0 : clamp(index, 0, state.lines.length-1);
+      console.log('SELECT_LINE_RELATIVE', index);
+      return {...state, selectedLineIndex: index};
     default:
       return state;
   }
 }
+
+// const defaultLine = {
+//   id: nil,
+// }
+
+// const lineReducer = (state = {}, action) => {
+//   switch (action.type) {
+//     case LINE_SELECTED:
+//       return action.payload;
+//     // case SELECT_LINE_RELATIVE:
+//     //   return 
+//   }
+// }
 
 const defaultConfig = {
   debug: false

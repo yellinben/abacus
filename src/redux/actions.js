@@ -9,9 +9,11 @@ import {
   LINE_CREATED,
   LINE_UPDATED,
   LINE_DELETED,
-  ADD_LINE,
+  LINE_SELECTED,
   SELECT_LINE,
-  TOGGLE_DEBUG
+  SELECT_LINE_RELATIVE,
+  ADD_LINE,
+  TOGGLE_DEBUG,
 } from './types'
 
 export const apiURL = (...paths) => {
@@ -155,12 +157,20 @@ export const deletedLine = (line) => {
   return {type: LINE_DELETED, payload: line};
 }
 
+export const selectedLine = (line) => {
+  return {type: LINE_SELECTED, payload: line};
+}
+
 export const addLine = () => {
   return {type: ADD_LINE};
 }
 
 export const selectLine = (line) => {
   return {type: SELECT_LINE, payload: line};
+}
+
+export const selectLineRelative = (relativeIndex) => {
+  return {type: SELECT_LINE_RELATIVE, payload: relativeIndex};
 }
 
 export const toggleDebug = () => {

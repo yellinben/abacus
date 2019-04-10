@@ -8,8 +8,10 @@ export const DOCUMENT_DELETED = 'DOCUMENT_DELETED';
 export const LINE_UPDATED = 'LINE_UPDATED';
 export const LINE_CREATED = 'LINE_CREATED';
 export const LINE_DELETED = 'LINE_DELETED';
+export const LINE_SELECTED = 'LINE_SELECTED';
 
 export const ADD_LINE = 'ADD_LINE';
 export const SELECT_LINE = 'SELECT_LINE';
+export const SELECT_LINE_RELATIVE = 'SELECT_LINE_RELATIVE';
 
 export const TOGGLE_DEBUG = 'TOGGLE_DEBUG';
