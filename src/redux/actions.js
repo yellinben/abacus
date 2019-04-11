@@ -162,8 +162,8 @@ export const selectedLine = (line) => {
   return {type: LINE_SELECTED, payload: line};
 }
 
-export const addLine = () => {
-  return {type: ADD_LINE};
+export const addLine = (currentIndex) => {
+  return {type: ADD_LINE, payload: currentIndex};
 }
 
 export const selectLine = (line) => {

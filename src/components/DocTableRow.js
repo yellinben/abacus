@@ -43,7 +43,7 @@ class DocTableRow extends Component {
   handleKeyDown = (e) => {
     if (e.which === 13) {
       // detect 'enter' keypress
-      this.props.addLine();
+      this.props.addLine(this.props.index);
     } else if (e.which === 27) {
       // detect 'esc' keypress
       e.target.blur();
@@ -117,8 +117,8 @@ const mapDispatchToProps = (dispatch) => {
     deleteLine: (line) => {
       dispatch(deletingLine(line))
     },
-    addLine: () => {
-      dispatch(addLine())
+    addLine: (currentIndex) => {
+      dispatch(addLine(currentIndex))
     },
     selectPrevLine: (currentIndex) => {
       dispatch(selectLineRelative(currentIndex, -1))

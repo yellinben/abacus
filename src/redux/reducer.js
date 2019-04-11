@@ -72,11 +72,16 @@ const documentReducer = (state = defaultDoc, action) => {
         ]
       };
     case ADD_LINE:
+      index = action.payload + 1;
+      const lines = state.lines;
+      const key = `new${index+1}`;
+
       return {
         ...state,
         lines: [
-          ...state.lines, 
-          {...defaultLine, document_id: state.id}
+          ...lines.slice(0, index),
+          {...defaultLine, key, document_id: state.id},
+          ...lines.slice(index, lines.length)
         ]
       };
     // case LINE_SELECTED:
