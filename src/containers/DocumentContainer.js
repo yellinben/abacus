@@ -24,6 +24,15 @@ class DocumentContainer extends Component {
     const params = this.props.match.params;
     this.props.fetchingDocument(params.docId);
   }
+  
+  componentDidUpdate(prevProps, prevState) {
+    const params = this.props.match.params;
+    const prevParams = prevProps.match.params;
+
+    if (prevParams.docId !== params.docId) {
+      this.props.fetchingDocument(params.docId);
+    }
+  }
 
   handleTitleBlur = (e) => {
     this.setTitle(e.target.value);
