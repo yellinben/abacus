@@ -9,9 +9,9 @@ import {
 } from '../redux/actions';
 
 import '../Document.scss';
-import DocTable from './DocTable';
+import DocEditor from '../components/Editor';
 
-class DocumentContainer extends Component {
+class DocContainer extends Component {
   constructor(props) {
     super(props);
     this.titleField = React.createRef();
@@ -106,7 +106,7 @@ class DocumentContainer extends Component {
                 </div>
               }
             </div>
-            <DocTable lines={doc.lines}></DocTable>
+            <DocEditor doc={doc} />
           </Fragment>
         }
       </div>
@@ -137,4 +137,4 @@ const mapDispatchToProps = dispatch => {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DocumentContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(DocContainer);

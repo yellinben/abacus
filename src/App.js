@@ -7,8 +7,7 @@ import { fetchingDocuments } from './redux/actions'
 import { Grid, Container } from 'semantic-ui-react';
 
 import Sidebar from './containers/Sidebar';
-import Header from './containers/Header';
-import DocumentContainer from './containers/DocumentContainer';
+import DocContainer from './containers/DocContainer';
 
 import './App.scss'
 
@@ -28,7 +27,7 @@ class App extends Component {
           <Grid.Column width={12}>
             <Route exact
               path="/documents/:docId"
-              component={DocumentContainer} />
+              component={DocContainer} />
           </Grid.Column>
         </Grid>
       </div>
