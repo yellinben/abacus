@@ -9,7 +9,7 @@ import {
 } from '../redux/actions';
 
 import '../Document.scss';
-import DocEditor from '../components/Editor';
+import DocEditor from '../components/DocEditor';
 
 class DocContainer extends Component {
   constructor(props) {
