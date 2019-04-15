@@ -9,7 +9,8 @@ class DocEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorState: EditorState.createEmpty()
+      inputState: EditorState.createEmpty(),
+      resultState: EditorState.createEmpty()
     };
   }
 
@@ -20,26 +21,37 @@ class DocEditor extends Component {
   }
 
   loadContent() {
-    const content = this.props.doc.contents.join('\n');
-    const contentState = ContentState.createFromText(content);
+    const contents = [];
+    const results = [];
+
+    this.props.doc.lines.forEach(line => {
+      console.log(line);
+      contents.push(line.input);
+      results.push(line.result_formatted);
+    });
+
+    const inputContentState = ContentState.createFromText(contents.join('\n'));
+    const resultContentState = ContentState.createFromText(results.join('\n'));
 
     this.setState({
-      editorState: EditorState.createWithContent(contentState)
+      inputState: EditorState.createWithContent(inputContentState),
+      resultState: EditorState.createWithContent(resultContentState)
     });
   }
 
   handleChange = (editorState) => {
-    console.log('change', editorState);
     this.setState({editorState});
   }
 
   render() {
-    const {doc} = this.props;
      return (
       <div className="editor-container doc-editor-container">
-        <Editor 
-          editorState={this.state.editorState} 
+        <Editor className="doc-input-editor"
+          editorState={this.state.inputState} 
           onChange={this.handleChange} />
+        <Editor className="doc-result-editor"
+          editorState={this.state.resultState} 
+          readOnly={true} />
       </div>
     )
   }
