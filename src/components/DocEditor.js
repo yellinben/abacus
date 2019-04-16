@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Editor, EditorState, ContentState, convertToRaw } from 'draft-js';
+import { Editor, EditorState, ContentState, SelectionState } from 'draft-js';
 import { isEqual, debounce } from 'lodash';
 
 import 'draft-js/dist/Draft.css';
@@ -13,12 +13,13 @@ class DocEditor extends Component {
     super(props);
     this.state = {
       inputState: EditorState.createEmpty(),
-      resultState: EditorState.createEmpty()
+      inputLoaded: false,
+      resultState: EditorState.createEmpty(),
+      selectionState: SelectionState.createEmpty()
     };
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // console.log('update', prevProps);
     if (prevProps.doc !== this.props.doc) {
       this.loadContent();
     }
@@ -35,38 +36,27 @@ class DocEditor extends Component {
   editorText = () => this.editorContent().getPlainText('\n');
   editorLines = () => this.editorText().split('\n');
 
-  // createContentState(contents) {
-  //   return ContentState.createFromText(contents.join('\n'));
-  // }
-  
-  // createEditorState = (contents) => {
-  //   EditorState.createWithContent(this.createContentState(contents));
-
   loadContent() {
-    // const contents = [];
-    // const results = [];
-
-    // this.props.doc.lines.forEach(line => {
-    //   contents.push(line.input);
-    //   results.push(line.result_formatted);
-    // });
-
-    // const inputContentState = ContentState.createFromText(this.contents.join('\n'));
-    // const resultContentState = ContentState.createFromText(this.results.join('\n'));
-
-    console.log(this.props.doc, this.lines());
-
-    const inputContentState = ContentState.createFromText(this.contentText());
     const resultContentState = ContentState.createFromText(this.resultText());
+    const newState = {resultState: EditorState.createWithContent(resultContentState)};
 
-    this.setState({
-      inputState: EditorState.createWithContent(inputContentState),
-      resultState: EditorState.createWithContent(resultContentState)
-    });
+    // prevent reloading input editor component
+    // to help maintain cursor position on update
+    // workaround, should be fixed
+    if (!this.state.inputLoaded) {
+      const inputContentState = ContentState.createFromText(this.contentText());
+      newState.inputState = EditorState.createWithContent(inputContentState);
+      newState.inputLoaded = true;
+    }
+
+    this.setState(newState);
   }
 
   handleChange = (editorState) => {
-    this.setState({inputState: editorState});
+    this.setState({
+      inputState: editorState,
+      selectionState: editorState.getSelection()
+    });
 
     const prevContent = this.contentText();
     const newContent = this.editorText();
