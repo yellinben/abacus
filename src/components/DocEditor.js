@@ -53,21 +53,22 @@ class DocEditor extends Component {
   }
 
   handleChange = (editorState) => {
+    const prevContent = this.editorText();
+    const newContent = editorState.getCurrentContent().getPlainText('\n');
+
     this.setState({
       inputState: editorState,
       selectionState: editorState.getSelection()
     });
-
-    const prevContent = this.contentText();
-    const newContent = this.editorText();
     
     if (!isEqual(prevContent, newContent))
       this.handleContentChange();
   }
 
   handleContentChange = debounce(() => {
+    console.log('contentChange')
     this.props.updateContent(this.props.doc, this.editorLines());
-  }, 400);
+  }, 200);
 
   render() {
      return (
