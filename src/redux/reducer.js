@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { EditorState, ContentState } from 'draft-js';
 
 import { 
   FETCHED_DOCUMENTS, 
@@ -6,15 +7,12 @@ import {
   DOCUMENT_CREATED,
   DOCUMENT_UPDATED,
   DOCUMENT_DELETED,
-  LINE_UPDATED,
-  LINE_CREATED,
-  LINE_SELECTED,
-  LINE_DELETED,
-  ADD_LINE,
-  SELECT_LINE,
-  SELECT_LINE_RELATIVE,
+  UPDATE_EDITOR,
+  UPDATE_RESULTS,
   TOGGLE_DEBUG
 } from './types';
+
+/* documents */
 
 const documentsReducer = (state = [], action) => {
   switch (action.type) {
@@ -36,94 +34,68 @@ const documentsReducer = (state = [], action) => {
   }
 }
 
-const defaultDoc = {lines: []};
-const defaultLine = {input: ''};
+/* document */
+
+const defaultDoc = {
+  title: "Untitled",
+  contents: [],
+  content: '',
+  lines: []
+};
 
 const documentReducer = (state = defaultDoc, action) => {
-  let index;
-
   switch (action.type) {
     case FETCHED_DOCUMENT:
-      return {...action.payload, 
-        selectedLineIndex: 0};
-    case LINE_UPDATED:
-      return {
-        ...state,
-        lines: state.lines.map(l => {
-          return (l.id === action.payload.id) ? 
-          action.payload : l
-        })
-      };
-    case LINE_DELETED:
-      return {
-        ...state,
-        lines: state.lines.filter(l => {
-          return l.id !== action.payload.id;
-        })
-      };
-    case LINE_CREATED:
-      // line creation should only happen on newly-added last line of doc
-      // replace id-less last line with full object
-      return {
-        ...state,
-        lines: [
-          ...state.lines.slice(0, state.lines.length-1),
-          action.payload
-        ]
-      };
-    case ADD_LINE:
-      index = action.payload + 1;
-      const lines = state.lines;
-      const key = `new${index+1}`;
-
-      return {
-        ...state,
-        lines: [
-          ...lines.slice(0, index),
-          {...defaultLine, key, document_id: state.id},
-          ...lines.slice(index, lines.length)
-        ]
-      };
-    // case LINE_SELECTED:
-    //   index = state.lines.indexOf(action.payload);
-      
-    //   if (index < 0)
-    //     index = state.lines.length-1;
-    //   else if (index >= state.lines.length)
-    //     index = 0
-
-    //   return {...state, selectedLineIndex: index};
-    case SELECT_LINE_RELATIVE:
-      // console.log(state.selectedLineIndex)
-      // index = (state.selectedLineIndex || 0) + action.payload;
-      // console.log('index1', index)
-
-      const {currentIndex, relativeIndex} = action.payload
-      index = currentIndex + relativeIndex;
-
-      if (index < 0)
-        index = state.lines.length-1;
-      else if (index >= state.lines.length)
-        index = 0
-
-      return {...state, selectedLineIndex: index};
+      return action.payload
     default:
       return state;
   }
 }
 
-// const defaultLine = {
-//   id: nil,
-// }
+/* input editor */
 
-// const lineReducer = (state = {}, action) => {
-//   switch (action.type) {
-//     case LINE_SELECTED:
-//       return action.payload;
-//     // case SELECT_LINE_RELATIVE:
-//     //   return 
-//   }
-// }
+// const defaultContentState = EditorState.createEmpty();
+// const defaultResultsState = EditorState.createEmpty();
+
+const defaultEditor = {
+  contents: [],
+  results: [],
+  editorState: EditorState.createEmpty()
+}
+
+const editorReducer = (state = defaultEditor, action) => {
+  switch (action.type) {
+    case UPDATE_EDITOR:
+      return {
+        ...state,
+        editorState: action.payload
+      };
+    case FETCHED_DOCUMENT:
+      const {contents,results} = action.payload;
+      return {
+        ...state,
+        contents,
+        results
+      };
+    default:
+      return state;
+  }
+}
+
+/* results */
+
+const defaultResultsState = EditorState.createEmpty();
+
+const resultsReducer = (state = defaultResultsState, action) => {
+  switch (action.type) {
+    case UPDATE_RESULTS:
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
+/* config */
 
 const defaultConfig = {
   debug: false
@@ -141,6 +113,7 @@ const configReducer = (state = defaultConfig, action) => {
 const rootReducer = combineReducers({
   documents: documentsReducer,
   document: documentReducer,
+  editor: editorReducer,
   config: configReducer
 });
 

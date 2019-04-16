@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Editor, EditorState, ContentState } from 'draft-js';
+import { Editor, EditorState, ContentState, convertToRaw } from 'draft-js';
+import { isEqual, debounce } from 'lodash';
 
 import 'draft-js/dist/Draft.css';
 import './DocEditor.scss';
+
+import { updatingDocumentContent } from '../redux/actions';
 
 class DocEditor extends Component {
   constructor(props) {
@@ -20,12 +23,22 @@ class DocEditor extends Component {
     }
   }
 
+  contentText = () => this.props.doc.contents.join('\n');
+  editorText = () => this.state.inputState.getCurrentContent().getPlainText('\n');
+  results = () => this.props.docs.lines.map(l => l.result_formatted).join('\n');
+
+  // createContentState(contents) {
+  //   return ContentState.createFromText(contents.join('\n'));
+  // }
+  
+  // createEditorState = (contents) => {
+  //   EditorState.createWithContent(this.createContentState(contents));
+
   loadContent() {
     const contents = [];
     const results = [];
 
     this.props.doc.lines.forEach(line => {
-      console.log(line);
       contents.push(line.input);
       results.push(line.result_formatted);
     });
@@ -40,8 +53,18 @@ class DocEditor extends Component {
   }
 
   handleChange = (editorState) => {
-    this.setState({editorState});
+    const prevContent = this.contentText();
+    const newContent = this.editorText();
+ 
+    this.setState({inputState: editorState});
+    
+    if (!isEqual(prevContent, newContent))
+      this.handleContentChange();
   }
+
+  handleContentChange = debounce(() => {
+    this.props.updateContent(this.props.doc, this.editorText());
+  }, 400);
 
   render() {
      return (
@@ -49,9 +72,6 @@ class DocEditor extends Component {
         <Editor className="doc-input-editor"
           editorState={this.state.inputState} 
           onChange={this.handleChange} />
-        <Editor className="doc-result-editor"
-          editorState={this.state.resultState} 
-          readOnly={true} />
       </div>
     )
   }
@@ -61,4 +81,12 @@ const mapStateToProps = (state, ownProps) => {
   return {doc: state.document};
 }
 
-export default connect(mapStateToProps)(DocEditor);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateContent: (doc, content) => {
+      dispatch(updatingDocumentContent(doc, content))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DocEditor);

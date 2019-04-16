@@ -14,6 +14,7 @@ import {
   SELECT_LINE_RELATIVE,
   ADD_LINE,
   TOGGLE_DEBUG,
+  UPDATE_EDITOR,
 } from './types'
 
 export const apiURL = (...paths) => {
@@ -102,78 +103,23 @@ export const deletedDocument = (doc) => {
   return {type: DOCUMENT_DELETED, payload: doc};
 }
 
-export const updatingLine = (line) => {
-  // if the id is nil or 'new'
-  // then it does not exist in db yet
-  if (!line.id || line.id === 'new') 
-    return creatingLine(line);
+export const updateEditor = (editorState) => {
+  return {type: UPDATE_EDITOR, payload: editorState};
+}
 
-  // if input text is now empty
-  // we can delete the line
-  if (isEmpty(line.input))
-    return deletingLine(line);
+// export const updateResults = (editorState) => {
+//   return {type: UPDATE_RESULTS, payload: editorState};
+// }
 
+export const updatingDocumentContent = (doc, content) => {
   return dispatch => {
-    fetch(apiURL('documents', line.document_id, 'lines', line.id), {
+    fetch(apiURL('documents', doc.id), {
       method: "PATCH",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(line)
-    })
-      .then(res => res.json())
-      .then(line => dispatch(updatedLine(line)));
-  }
-}
-
-export const creatingLine = (line) => {
-  return dispatch => {
-    fetch(apiURL('documents', line.document_id, 'lines'), {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(line)
-    })
-      .then(res => res.json())
-      .then(line => dispatch(createdLine(line)));
-  }
-}
-
-export const deletingLine = (line) => {
-  return dispatch => {
-    dispatch(deletedLine(line));
-    fetch(apiURL('documents', line.document_id, 'lines', line.id), {
-      method: "DELETE",
-      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({content})
     }).then(res => res.json())
+      .then(doc => dispatch(updatedDocument(doc)))
   }
-}
-
-export const updatedLine = (line) => {
-  return {type: LINE_UPDATED, payload: line};
-}
-
-export const createdLine = (line) => {
-  return {type: LINE_CREATED, payload: line};
-}
-
-export const deletedLine = (line) => {
-  return {type: LINE_DELETED, payload: line};
-}
-
-export const selectedLine = (line) => {
-  return {type: LINE_SELECTED, payload: line};
-}
-
-export const addLine = (currentIndex) => {
-  return {type: ADD_LINE, payload: currentIndex};
-}
-
-export const selectLine = (line) => {
-  return {type: SELECT_LINE, payload: line};
-}
-
-export const selectLineRelative = (currentIndex, relativeIndex) => {
-  return {type: SELECT_LINE_RELATIVE, payload: {
-    currentIndex, relativeIndex
-  }};
 }
 
 export const toggleDebug = () => {
