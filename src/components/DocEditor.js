@@ -18,14 +18,22 @@ class DocEditor extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    // console.log('update', prevProps);
     if (prevProps.doc !== this.props.doc) {
       this.loadContent();
     }
   }
 
-  contentText = () => this.props.doc.contents.join('\n');
-  editorText = () => this.state.inputState.getCurrentContent().getPlainText('\n');
-  results = () => this.props.docs.lines.map(l => l.result_formatted).join('\n');
+  lines = () => this.props.doc.lines;
+  contents = () => this.props.doc.contents;
+  results = () => this.lines().map(l => l.result_formatted);
+
+  contentText = () => this.contents().join('\n');
+  resultText = () => this.results().join('\n');
+
+  editorContent = () => this.state.inputState.getCurrentContent();
+  editorText = () => this.editorContent().getPlainText('\n');
+  editorLines = () => this.editorText().split('\n');
 
   // createContentState(contents) {
   //   return ContentState.createFromText(contents.join('\n'));
@@ -35,16 +43,21 @@ class DocEditor extends Component {
   //   EditorState.createWithContent(this.createContentState(contents));
 
   loadContent() {
-    const contents = [];
-    const results = [];
+    // const contents = [];
+    // const results = [];
 
-    this.props.doc.lines.forEach(line => {
-      contents.push(line.input);
-      results.push(line.result_formatted);
-    });
+    // this.props.doc.lines.forEach(line => {
+    //   contents.push(line.input);
+    //   results.push(line.result_formatted);
+    // });
 
-    const inputContentState = ContentState.createFromText(contents.join('\n'));
-    const resultContentState = ContentState.createFromText(results.join('\n'));
+    // const inputContentState = ContentState.createFromText(this.contents.join('\n'));
+    // const resultContentState = ContentState.createFromText(this.results.join('\n'));
+
+    console.log(this.props.doc, this.lines());
+
+    const inputContentState = ContentState.createFromText(this.contentText());
+    const resultContentState = ContentState.createFromText(this.resultText());
 
     this.setState({
       inputState: EditorState.createWithContent(inputContentState),
@@ -53,25 +66,31 @@ class DocEditor extends Component {
   }
 
   handleChange = (editorState) => {
+    this.setState({inputState: editorState});
+
     const prevContent = this.contentText();
     const newContent = this.editorText();
- 
-    this.setState({inputState: editorState});
     
     if (!isEqual(prevContent, newContent))
       this.handleContentChange();
   }
 
   handleContentChange = debounce(() => {
-    this.props.updateContent(this.props.doc, this.editorText());
+    this.props.updateContent(this.props.doc, this.editorLines());
   }, 400);
 
   render() {
      return (
       <div className="editor-container doc-editor-container">
-        <Editor className="doc-input-editor"
-          editorState={this.state.inputState} 
-          onChange={this.handleChange} />
+        <div className="doc-editor input-editor">
+          <Editor editorState={this.state.inputState} 
+            onChange={this.handleChange}
+            stripPastedStyles={true} />
+        </div>
+        <div className="doc-editor result-editor">
+          <Editor editorState={this.state.resultState} 
+            readOnly={true} />
+        </div>
       </div>
     )
   }

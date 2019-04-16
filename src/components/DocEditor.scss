@@ -15,12 +15,14 @@ $font-family-mono: $font-mono, Menlo, Monaco, "Courier New", "Courier", monospac
   
   display: flex;
   
-  .DraftEditor-root {
+  .doc-editor {
     padding: 12px;
     width: 50%;
   }
 
-  .DraftEditor-root:last-child {
+  .input-editor {}
+
+  .result-editor {
     background-color: #eee;
   }
 }

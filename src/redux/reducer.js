@@ -47,6 +47,8 @@ const documentReducer = (state = defaultDoc, action) => {
   switch (action.type) {
     case FETCHED_DOCUMENT:
       return action.payload
+    case DOCUMENT_UPDATED:
+      return action.payload
     default:
       return state;
   }

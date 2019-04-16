@@ -111,12 +111,12 @@ export const updateEditor = (editorState) => {
 //   return {type: UPDATE_RESULTS, payload: editorState};
 // }
 
-export const updatingDocumentContent = (doc, content) => {
+export const updatingDocumentContent = (doc, contents) => {
   return dispatch => {
     fetch(apiURL('documents', doc.id), {
       method: "PATCH",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({content})
+      body: JSON.stringify({contents})
     }).then(res => res.json())
       .then(doc => dispatch(updatedDocument(doc)))
   }
