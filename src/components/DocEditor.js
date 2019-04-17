@@ -66,7 +66,7 @@ class DocEditor extends Component {
   }
 
   handleContentChange = debounce(() => {
-    console.log('contentChange')
+    // console.log('contentChange', this.editorLines());
     this.props.updateContent(this.props.doc, this.editorLines());
   }, 200);
 

@@ -22,6 +22,7 @@ class Sidebar extends Component {
               {this.props.documents.map(doc => {
                 return <Menu.Item as={NavLink} 
                   to={`/documents/${doc.id}`}
+                  onClick={() => window.location.href = `/documents/${doc.id}`}
                   key={doc.id} name={doc.title} />
               })}
             </Menu.Menu>
