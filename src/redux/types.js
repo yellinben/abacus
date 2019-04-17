@@ -9,3 +9,4 @@ export const UPDATE_EDITOR = 'UPDATE_EDITOR';
 export const UPDATE_RESULTS = 'UPDATE_RESULTS';
 
 export const TOGGLE_DEBUG = 'TOGGLE_DEBUG';
+export const CATCH_ERROR = 'CATCH_ERROR';

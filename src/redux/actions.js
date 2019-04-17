@@ -15,6 +15,7 @@ import {
   ADD_LINE,
   TOGGLE_DEBUG,
   UPDATE_EDITOR,
+  CATCH_ERROR
 } from './types'
 
 export const apiURL = (...paths) => {
@@ -25,18 +26,23 @@ export const apiURL = (...paths) => {
     version: 1
   }
 
-  paths = [`${API.host}:${API.port}`, API.path, `v${API.version}`, ...paths];
-  return paths.join('/');
+  const url = [`${API.host}:${API.port}`, API.path, `v${API.version}`]
+  if (paths && paths.length) url.push(...paths);
+  
+  return url.join('/');
 }
 
 export const creatingDocument = () => {
   return dispatch => {
-    // console.log('creatingDocument');
+    console.log('creatingDocument');
     fetch(apiURL('documents'), {method: "POST"})
       .then(res => res.json())
       .then(doc => {
-        // console.log('doc', doc);
-        dispatch(createdDocument(doc));
+        window.location.href = `/documents/${doc.id}`;
+        // return dispatch(createdDocument(doc));
+      }).catch(err => {
+        console.error(err);
+        return dispatch(catchError(err));
       });
   }
 }
@@ -124,4 +130,8 @@ export const updatingDocumentContent = (doc, contents) => {
 
 export const toggleDebug = () => {
   return {type: TOGGLE_DEBUG};
+}
+
+export const catchError = (err) => {
+  return {type: CATCH_ERROR, payload: err};
 }
