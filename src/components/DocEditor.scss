@@ -9,8 +9,11 @@ $font-family-mono: $font-mono, Menlo, Monaco, "Courier New", "Courier", monospac
 .editor-container {
   background: #fff;
   color: rgba(0, 0, 0, 0.87);
+  
   // font-family: $font-family-mono;
-
+  -webkit-font-smoothing: antialiased;
+  
+  min-height: 70vh;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-bottom: none;
 
@@ -28,15 +31,16 @@ $font-family-mono: $font-mono, Menlo, Monaco, "Courier New", "Courier", monospac
   
   .doc-editor {
     padding: 12px;
-    width: 50%;
   }
 
   .input-editor {
     background: #FFFFFF;
+    width: 70%;
   }
 
   .result-editor {
     background-color: #eee;
+    width: 30%;
   }
 }
 

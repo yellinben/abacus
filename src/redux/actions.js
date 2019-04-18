@@ -42,7 +42,8 @@ export const creatingDocument = () => {
     fetch(apiURL('documents'), {method: "POST"})
       .then(res => res.json())
       .then(doc => {
-        window.location.href = `/documents/${doc.id}`;
+        const href = (doc.id) ? `/documents/${doc.id}` : '/';
+        window.location.href = href;
         // return dispatch(createdDocument(doc));
       }).catch(err => {
         console.error(err);
