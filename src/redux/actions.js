@@ -15,7 +15,11 @@ import {
   ADD_LINE,
   TOGGLE_DEBUG,
   UPDATE_EDITOR,
-  CATCH_ERROR
+  UPDATE_RESULTS,
+  UPDATE_EDITOR_STATE,
+  CATCH_ERROR,
+  WRITE_EDITOR,
+  WRITE_RESULTS
 } from './types'
 
 export const apiURL = (...paths) => {
@@ -34,7 +38,7 @@ export const apiURL = (...paths) => {
 
 export const creatingDocument = () => {
   return dispatch => {
-    console.log('creatingDocument');
+    // console.log('creatingDocument');
     fetch(apiURL('documents'), {method: "POST"})
       .then(res => res.json())
       .then(doc => {
@@ -109,10 +113,6 @@ export const deletedDocument = (doc) => {
   return {type: DOCUMENT_DELETED, payload: doc};
 }
 
-export const updateEditor = (editorState) => {
-  return {type: UPDATE_EDITOR, payload: editorState};
-}
-
 // export const updateResults = (editorState) => {
 //   return {type: UPDATE_RESULTS, payload: editorState};
 // }
@@ -126,6 +126,51 @@ export const updatingDocumentContent = (doc, contents) => {
     }).then(res => res.json())
       .then(doc => dispatch(updatedDocument(doc)))
   }
+}
+
+export const writeEditorText = (text) => {
+  return {type: WRITE_EDITOR, payload: text}
+}
+
+export const writeResultText = (text) => {
+  return {type: WRITE_RESULTS, payload: text}
+}
+
+export const updatingEditor = (doc, rawContent) => {
+  // console.log('updatingEditor:', rawContent);
+  const contents = rawContent.blocks.map(b => b.text);
+  // if (typeof content === 'string')
+  //   contents = contents.split('\n');
+
+  return dispatch => {
+    fetch(apiURL('documents', doc.id), {
+      method: "PATCH",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({contents})
+    }).then(res => res.json())
+      .then(newDoc => {
+        // console.log('updatingEditor', newDoc);
+        dispatch(updatedEditorContent(rawContent));
+
+        const results = newDoc.lines.map(l => l.result_formatted);
+        dispatch(updatedResults(results));
+      }).catch(err => {
+        console.error(err);
+        return dispatch(catchError(err));
+      });
+  }
+}
+
+export const updatedEditorState = (editorState) => {
+  return {type: UPDATE_EDITOR_STATE, payload: editorState};
+}
+
+export const updatedEditorContent = (content) => {
+  return {type: UPDATE_EDITOR, payload: content};
+}
+
+export const updatedResults = (results) => {
+  return {type: UPDATE_RESULTS, payload: results};
 }
 
 export const toggleDebug = () => {

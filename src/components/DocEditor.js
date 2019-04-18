@@ -1,28 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Editor, EditorState, ContentState, SelectionState } from 'draft-js';
-import { isEqual, debounce } from 'lodash';
+import { Editor, EditorState, ContentState, SelectionState, convertToRaw } from 'draft-js';
+import { debounce } from 'lodash';
 
 import 'draft-js/dist/Draft.css';
 import './DocEditor.scss';
 
-import { updatingDocumentContent } from '../redux/actions';
+import { updatingEditor } from '../redux/actions';
 
 class DocEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
       inputState: EditorState.createEmpty(),
-      inputLoaded: false,
-      resultState: EditorState.createEmpty(),
       selectionState: SelectionState.createEmpty()
     };
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.doc !== this.props.doc) {
-      this.loadContent();
-    }
   }
 
   lines = () => this.props.doc.lines;
@@ -53,33 +45,26 @@ class DocEditor extends Component {
   }
 
   handleChange = (editorState) => {
-    const prevContent = this.editorText();
-    const newContent = editorState.getCurrentContent().getPlainText('\n');
-
-    this.setState({
-      inputState: editorState,
-      selectionState: editorState.getSelection()
-    });
-    
-    if (!isEqual(prevContent, newContent))
-      this.handleContentChange();
+    this.setState({inputState: editorState});
+    this.handleContentChange(editorState);
   }
 
-  handleContentChange = debounce(() => {
+  handleContentChange = debounce((editorState) => {
     // console.log('contentChange', this.editorLines());
-    this.props.updateContent(this.props.doc, this.editorLines());
-  }, 200);
+    const rawContent = convertToRaw(editorState.getCurrentContent());
+    this.props.updateContent(this.props.doc, rawContent);
+  }, 500);
 
   render() {
      return (
       <div className="editor-container doc-editor-container">
         <div className="doc-editor input-editor">
-          <Editor editorState={this.state.inputState} 
-            onChange={this.handleChange}
+          <Editor onChange={this.handleChange}
+            editorState={EditorState.acceptSelection(this.props.inputState, this.state.inputState.getSelection())}
             stripPastedStyles={true} />
         </div>
         <div className="doc-editor result-editor">
-          <Editor editorState={this.state.resultState} 
+          <Editor editorState={this.props.resultState} 
             readOnly={true} />
         </div>
       </div>
@@ -88,13 +73,19 @@ class DocEditor extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  return {doc: state.document};
+  return {
+    doc: state.document,
+    inputState: state.editor.inputState,
+    resultState: state.editor.resultState,
+    rawContent: state.editor.rawContent
+  };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     updateContent: (doc, content) => {
-      dispatch(updatingDocumentContent(doc, content))
+      // console.log('updateContent', content);
+      dispatch(updatingEditor(doc, content))
     }
   }
 }
