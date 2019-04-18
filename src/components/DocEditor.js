@@ -133,16 +133,16 @@ function sabotageStrategy(contentBlock, callback, contentState) {
 
 const compositeDecorator = new CompositeDecorator([
   {
+    strategy: numberStrategy,
+    component: NumberSpan,
+  },
+  {
     strategy: commentStrategy,
     component: CommentSpan,
   },
   {
     strategy: operatorStrategy,
     component: OperatorSpan,
-  },
-  {
-    strategy: numberStrategy,
-    component: NumberSpan,
   },
   {
     strategy: funcStrategy,

@@ -1,0 +1,28 @@
+
+// $font-heading: "Roboto Slab" !default;
+$font-heading: "Helvetica Neue" !default;
+$font-mono: "Roboto Mono" !default;
+
+$font-family-heading: $font-heading, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif !default;
+$font-family-mono: $font-mono, Menlo, Monaco, "Courier New", "Courier", monospace !default;
+
+.ui.menu {
+  font-family: $font-family-heading;
+}
+
+.sidebar .ui.menu.vertical {
+  .header { 
+    font-size: 1.3em; 
+  }
+
+  .header-title {
+    font-size: 3.2em !important;
+    text-align: center;
+    margin-bottom: 0 !important;
+  }
+
+  .item:not(.header) {
+    font-size: 1em;
+    padding-left: 1.1em;
+  }
+}

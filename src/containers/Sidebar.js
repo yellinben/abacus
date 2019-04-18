@@ -7,6 +7,8 @@ import { NavLink } from 'react-router-dom';
 import SidebarItem from '../components/SidebarItem';
 import { creatingDocument } from '../redux/actions';
 
+import './Sidebar.scss';
+
 class Sidebar extends Component {
   handleNew = (e) => {
     this.props.createDocument();
@@ -17,7 +19,7 @@ class Sidebar extends Component {
       <div className="sidebar">
         <Menu vertical>
           <Menu.Item>
-            <Menu.Header>Documents</Menu.Header>
+            <Menu.Header className="header-title">Abacus</Menu.Header>
             <Menu.Menu>
               {this.props.documents.map(doc => {
                 return <Menu.Item as={NavLink} 
