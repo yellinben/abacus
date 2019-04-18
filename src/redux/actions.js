@@ -138,21 +138,16 @@ export const writeResultText = (text) => {
 }
 
 export const updatingEditor = (doc, rawContent) => {
-  // console.log('updatingEditor:', rawContent);
-  const contents = rawContent.blocks.map(b => b.text);
-  // if (typeof content === 'string')
-  //   contents = contents.split('\n');
-
   return dispatch => {
+    dispatch(updatedEditorContent(rawContent));
+    const contents = rawContent.blocks.map(b => b.text);
+
     fetch(apiURL('documents', doc.id), {
       method: "PATCH",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({contents})
     }).then(res => res.json())
       .then(newDoc => {
-        // console.log('updatingEditor', newDoc);
-        dispatch(updatedEditorContent(rawContent));
-
         const results = newDoc.lines.map(l => l.result_formatted);
         dispatch(updatedResults(results));
       }).catch(err => {

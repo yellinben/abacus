@@ -72,7 +72,7 @@ const FUNC_REGEX = /\b(min|max|sum|avg|count|round|rounddown|roundup|sin|cos|tan
 const VAR_REGEX = /^[a-z0-9_-]+ /gi;
 
 // const UNIT_REGEX = /\b(ft|feet|in|inches|m|meters|km|kilometers)/gi;
-const UNIT_REGEX = /\b(googol|zetta|zepto|yotta|yocto|milli|micro|hecto|femto|centi|Zetta|Zepto|Yotta|Yocto|Milli|Micro|Hecto|Femto|Centi|zebi|yobi|tera|tebi|pico|peta|pebi|nano|mega|mebi|kilo|kibi|giga|gibi|exbi|deka|deci|deca|atto|Zebi|Yobi|Tera|Tebi|Pico|Peta|Pebi|Nano|Mega|Mebi|Kibi|Giga|Gibi|Exbi|Deci|Deca|Atto|exa|Exa|mc|da|Zi|Yi|Ti|Pi|Mi|Ki|Gi|Ei|µ|z|y|u|p|n|m|k|h|f|d|c|a|Z|Y|T|P|M|G|E|1)??(standard-gravitation|astronomical-unit|light-second|light-minute|fluid-ounces|tablespoons|survey-foot|pound-force|naut-league|fluid-ounce|atmospheres|tablespoon|steradians|short-tons|pound-mass|nucleotide|metric-ton|light-year|horsepower|fortnights|fahrenheit|centigrade|becquerels|atmosphere|teaspoons|steradian|short-ton|red-shift|naut-mile|molecules|kilograms|fortnight|centuries|boardfoot|boardfeet|becquerel|base-pair|angstroms|teaspoon|sieverts|rotation|roentgen|redshift|poundals|oersteds|nleagues|molecule|maxwells|kilogram|furlongs|decibels|coulombs|calories|angstrom|Calories|sievert|siemens|seconds|rankine|radians|poundal|percent|pascals|parsecs|oersted|nleague|newtons|minutes|maxwell|leagues|henries|hectare|grammes|gradian|gallons|furlong|fathoms|enzUnit|degrees|decibel|decades|daltons|coulomb|century|celsius|candela|calorie|amperes|Calorie|webers|therms|teslas|stokes|second|radian|quarts|pounds|points|pixels|pascal|parsec|ounces|newton|minute|metres|meters|litres|liters|league|kelvin|joules|inches|gramme|gallon|fathom|farads|dollar|degree|decade|dalton|curies|carats|ampere|years|yards|weeks|weber|watts|volts|units|tonne|therm|tesla|tempR|tempK|tempF|tempC|stone|slugs|sfoot|sfeet|quart|pound|poise|point|pixel|pints|picas|ounce|molar|miles|metre|meter|lumen|litre|liter|knots|katal|joule|inh2o|inH2O|hours|hertz|henry|gross|grays|grams|grads|gauss|farad|dozen|curie|count|cmh2o|cmH2O|cents|cells|carat|bytes|annum|acres|Therm|year|yard|week|watt|volt|unit|torr|tons|tbsp|sqin|sqft|slug|rods|pint|pica|ohms|mole|mmHg|mils|mile|lsec|lmin|knot|inch|inHg|inAq|hour|gray|gram|grad|foot|floz|feet|ergs|each|dyne|dots|degR|degK|degF|degC|days|cups|cmAq|cell|byte|btus|bdft|bars|amps|acre|Watt|Torr|CFPM|Btus|tsp|ton|thm|tbs|sft|sec|rpm|rod|rad|psi|ppm|ppi|ppb|pdl|ohm|nmi|mph|mol|min|mil|lux|lbs|lbm|lbf|kts|kph|kat|hrs|gon|gee|gal|fur|fps|fbm|erg|dyn|dpm|dpi|doz|dot|deg|day|cup|cpm|cfm|cal|btu|bpm|bit|bar|atm|ang|amu|amp|USD|Ohm|Cal|CFM|Btu|ATM|AMU|yr|yd|wk|tn|st|sr|rd|qt|px|pt|pc|oz|nt|mi|ly|ls|lm|lb|kt|kn|kg|in|hr|hp|gr|ft|dz|dB|cu|ct|cd|bp|bf|Wb|Sv|St|Pa|Oe|NM|Mx|Hz|Gy|Da|Ci|Bq|AU|z|y|u|s|m|l|h|g|d|b|W|V|U|T|S|R|P|N|M|L|J|H|G|F|C|B|A|'|%|#|")\b/g
+const UNIT_REGEX = /\b(googol|zetta|zepto|yotta|yocto|milli|micro|hecto|femto|centi|Zetta|Zepto|Yotta|Yocto|Milli|Micro|Hecto|Femto|Centi|zebi|yobi|tera|tebi|pico|peta|pebi|nano|mega|mebi|kilo|kibi|giga|gibi|exbi|deka|deci|deca|atto|Zebi|Yobi|Tera|Tebi|Pico|Peta|Pebi|Nano|Mega|Mebi|Kibi|Giga|Gibi|Exbi|Deci|Deca|Atto|exa|Exa|mc|da|Zi|Yi|Ti|Pi|Mi|Ki|Gi|Ei|µ|z|y|u|p|n|m|k|h|f|d|c|a|Z|Y|T|P|M|G|E|1)??(standard-gravitation|astronomical-unit|light-second|light-minute|fluid-ounces|tablespoons|survey-foot|pound-force|naut-league|fluid-ounce|atmospheres|tablespoon|steradians|short-tons|pound-mass|nucleotide|metric-ton|light-year|horsepower|fortnights|fahrenheit|centigrade|becquerels|atmosphere|teaspoons|steradian|short-ton|red-shift|naut-mile|molecules|kilograms|fortnight|centuries|boardfoot|boardfeet|becquerel|base-pair|angstroms|teaspoon|sieverts|rotation|roentgen|redshift|poundals|oersteds|nleagues|molecule|maxwells|kilogram|furlongs|decibels|coulombs|calories|angstrom|Calories|sievert|siemens|seconds|rankine|radians|poundal|percent|pascals|parsecs|oersted|nleague|newtons|minutes|maxwell|leagues|henries|hectare|grammes|gradian|gallons|furlong|fathoms|enzUnit|degrees|decibel|decades|daltons|coulomb|century|celsius|candela|calorie|amperes|Calorie|webers|therms|teslas|stokes|second|radian|quarts|pounds|points|pixels|pascal|parsec|ounces|newton|minute|metres|meters|litres|liters|league|kelvin|joules|inches|gramme|gallon|fathom|farads|dollar|degree|decade|dalton|curies|carats|ampere|years|yards|weeks|weber|watts|volts|units|tonne|therm|tesla|tempR|tempK|tempF|tempC|stone|slugs|sfoot|sfeet|quart|pound|poise|point|pixel|pints|picas|ounce|molar|miles|metre|meter|lumen|litre|liter|knots|katal|joule|inh2o|inH2O|hours|hertz|henry|gross|grays|grams|grads|gauss|farad|dozen|curie|count|cmh2o|cmH2O|cents|cells|carat|bytes|annum|acres|Therm|year|yard|week|watt|volt|unit|torr|tons|tbsp|sqin|sqft|slug|rods|pint|pica|ohms|mole|mmHg|mils|mile|lsec|lmin|knot|inch|inHg|inAq|hour|gray|gram|grad|foot|floz|feet|ergs|each|dyne|dots|degR|degK|degF|degC|days|cups|cmAq|cell|byte|btus|bdft|bars|amps|acre|Watt|Torr|CFPM|Btus|tsp|ton|thm|tbs|sft|sec|rpm|rod|rad|psi|ppm|ppi|ppb|pdl|ohm|nmi|mph|mol|min|mil|lux|lbs|lbm|lbf|kts|kph|kat|hrs|gon|gee|gal|fur|fps|fbm|erg|dyn|dpm|dpi|doz|dot|deg|day|cup|cpm|cfm|cal|btu|bpm|bit|bar|atm|ang|amu|amp|USD|Ohm|Cal|CFM|Btu|ATM|AMU|yr|yd|wk|tn|st|sr|rd|qt|px|pt|pc|oz|nt|mi|ly|ls|lm|lb|kt|kn|kg|hr|hp|gr|ft|dz|dB|cu|ct|cd|bp|bf|Wb|Sv|St|Pa|Oe|NM|Mx|Hz|Gy|Da|Ci|Bq|AU|z|y|u|s|m|l|h|g|d|b|W|V|U|T|S|R|P|N|M|L|J|H|G|F|C|B|A|'|%|#|")\b/g
 
 const styleColors = {
   comment: 'gray',
@@ -189,10 +189,10 @@ class DocEditor extends Component {
         inputState: EditorState.set(editorState, 
           {decorator: compositeDecorator})
       });
-      
-      // this.handleContentChange(editorState);
-      const rawContent = convertToRaw(editorState.getCurrentContent());
-      this.props.updateContent(this.props.doc, rawContent);
+
+      this.handleContentChange(editorState);
+      // const rawContent = convertToRaw(editorState.getCurrentContent());
+      // this.props.updateContent(this.props.doc, rawContent);
     }
   }
 
@@ -200,7 +200,7 @@ class DocEditor extends Component {
     const rawContent = convertToRaw(editorState.getCurrentContent());
     console.log('handleContentChange', rawContent);
     this.props.updateContent(this.props.doc, rawContent);
-  }, 5);
+  }, 200);
 
   render() {
      return (
