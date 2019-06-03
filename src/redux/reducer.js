@@ -2,11 +2,11 @@ import { combineReducers } from 'redux';
 import { EditorState, ContentState, convertToRaw, convertFromRaw } from 'draft-js';
 
 import { 
-  FETCHED_DOCUMENTS, 
-  FETCHED_DOCUMENT, 
-  DOCUMENT_CREATED,
-  DOCUMENT_UPDATED,
-  DOCUMENT_DELETED,
+  FETCHED_SHEETS, 
+  FETCHED_SHEET, 
+  SHEET_CREATED,
+  SHEET_UPDATED,
+  SHEET_DELETED,
   UPDATE_EDITOR,
   UPDATE_RESULTS,
   TOGGLE_DEBUG,
@@ -15,20 +15,20 @@ import {
   WRITE_RESULTS
 } from './types';
 
-/* documents */
+/* sheets */
 
-const documentsReducer = (state = [], action) => {
+const sheetsReducer = (state = [], action) => {
   switch (action.type) {
-    case FETCHED_DOCUMENTS:
+    case FETCHED_SHEETS:
       return action.payload;
-    case DOCUMENT_CREATED:
+    case SHEET_CREATED:
       return [...state, action.payload];
-    case DOCUMENT_UPDATED:
+    case SHEET_UPDATED:
       return state.map(d => {
         return (d.id === action.payload.id) ? 
         action.payload : d;
       });
-    case DOCUMENT_DELETED:
+    case SHEET_DELETED:
       return state.filter(d => {
         return d.id !== action.payload.id;
       });
@@ -37,20 +37,20 @@ const documentsReducer = (state = [], action) => {
   }
 }
 
-/* document */
+/* sheet */
 
-const defaultDoc = {
+const defaultSheet = {
   title: "Untitled",
   contents: [],
   content: '',
   lines: []
 };
 
-const documentReducer = (state = defaultDoc, action) => {
+const sheetReducer = (state = defaultSheet, action) => {
   switch (action.type) {
-    case FETCHED_DOCUMENT:
+    case FETCHED_SHEET:
       return action.payload
-    case DOCUMENT_UPDATED:
+    case SHEET_UPDATED:
       return action.payload
     default:
       return state;
@@ -94,7 +94,7 @@ const editorReducer = (state = defaultEditor, action) => {
         ...state,
         resultState: EditorState.createWithContent(resultContent)
       };
-    case FETCHED_DOCUMENT:
+    case FETCHED_SHEET:
       const {contents} = action.payload;
       const results = action.payload.lines.map(l => l.result_formatted);
 
@@ -127,8 +127,8 @@ const configReducer = (state = defaultConfig, action) => {
 }
 
 const rootReducer = combineReducers({
-  documents: documentsReducer,
-  document: documentReducer,
+  sheets: sheetsReducer,
+  sheet: sheetReducer,
   editor: editorReducer,
   config: configReducer
 });

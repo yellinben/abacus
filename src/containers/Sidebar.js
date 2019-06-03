@@ -4,14 +4,13 @@ import { connect } from 'react-redux';
 import { Menu } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
 
-import SidebarItem from '../components/SidebarItem';
-import { creatingDocument } from '../redux/actions';
+import { creatingSheet } from '../redux/actions';
 
 import './Sidebar.scss';
 
 class Sidebar extends Component {
   handleNew = (e) => {
-    this.props.createDocument();
+    this.props.createSheet();
   }
 
   render() {
@@ -21,17 +20,17 @@ class Sidebar extends Component {
           <Menu.Item>
             <Menu.Header className="header-title">Abacus</Menu.Header>
             <Menu.Menu>
-              {this.props.documents.map(doc => {
+              {this.props.sheets.map(sheet => {
                 return <Menu.Item as={NavLink} 
-                  to={`/documents/${doc.id}`}
-                  key={doc.id} name={doc.title} />
+                  to={`/sheets/${sheet.id}`}
+                  key={sheet.id} name={sheet.title} />
               })}
             </Menu.Menu>
           </Menu.Item>
           <Menu.Item 
             className="sidebar-action new-link"
             onClick={this.handleNew} 
-            name="New Document" />
+            name="New Sheet" />
         </Menu>
       </div>
     );
@@ -40,14 +39,14 @@ class Sidebar extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    documents: state.documents
+    sheets: state.sheets
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createDocument: () => {
-      dispatch(creatingDocument());
+    createSheet: () => {
+      dispatch(creatingSheet());
     }
   };
 }

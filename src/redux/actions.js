@@ -1,11 +1,11 @@
-import { Document } from 'abacus-js';
+import { Sheet } from 'abacus-js';
 
 import {
-  FETCHED_DOCUMENTS,
-  FETCHED_DOCUMENT,
-  DOCUMENT_CREATED,
-  DOCUMENT_DELETED,
-  DOCUMENT_UPDATED,
+  FETCHED_SHEETS,
+  FETCHED_SHEET,
+  SHEET_CREATED,
+  SHEET_DELETED,
+  SHEET_UPDATED,
   TOGGLE_DEBUG,
   UPDATE_EDITOR,
   UPDATE_RESULTS,
@@ -15,10 +15,11 @@ import {
   WRITE_RESULTS,
 } from './types';
 
-const defaultDoc = new Document(
-  {title: 'npm'}, [
-  '1 + 4', '8 * 2.1'
-]);
+const tempSheet = new Sheet({title: 'temp'});
+tempSheet.add(
+  '1 + 4', 
+  '8 * 2.1'
+);
 
 export const apiURL = (...paths) => {
   const API = {
@@ -34,60 +35,60 @@ export const apiURL = (...paths) => {
   return url.join('/');
 };
 
-export const creatingDocument = () => {
+export const creatingSheet = () => {
   return dispatch => {
-    const doc = new Document();
-    return dispatch(createdDocument(doc));
+    const sheet = new Sheet();
+    return dispatch(createdSheet(sheet));
   };
 };
 
-export const createdDocument = doc => {
-  return {action: DOCUMENT_CREATED, payload: doc};
+export const createdSheet = sheet => {
+  return {action: SHEET_CREATED, payload: sheet};
 };
 
-export const fetchingDocuments = () => {
+export const fetchingSheets = () => {
   return dispatch => {
-    dispatch(fetchedDocuments([defaultDoc]));
+    dispatch(fetchedSheets([tempSheet]));
   };
 };
 
-export const fetchedDocuments = documents => {
-  return {type: FETCHED_DOCUMENTS, payload: documents};
+export const fetchedSheets = sheets => {
+  return {type: FETCHED_SHEETS, payload: sheets};
 };
 
-export const fetchingDocument = id => {
+export const fetchingSheet = id => {
   return dispatch => {
-    dispatch(fetchedDocument(defaultDoc));
+    dispatch(fetchedSheet(tempSheet));
   };
 };
 
-export const fetchedDocument = document => {
-  return {type: FETCHED_DOCUMENT, payload: document};
+export const fetchedSheet = sheet => {
+  return {type: FETCHED_SHEET, payload: sheet};
 };
 
-export const updatingDocument = doc => {
+export const updatingSheet = sheet => {
   return dispatch => {
-    dispatch(updatedDocument(doc));
+    dispatch(updatedSheet(sheet));
   };
 };
 
-export const updatedDocument = doc => {
-  return {type: DOCUMENT_UPDATED, payload: doc};
+export const updatedSheet = sheet => {
+  return {type: SHEET_UPDATED, payload: sheet};
 };
 
-export const deletingDocument = doc => {
+export const deletingSheet = sheet => {
   return dispatch => {
-    dispatch(deletedDocument(doc));
+    dispatch(deletedSheet(sheet));
   };
 };
 
-export const deletedDocument = doc => {
-  return {type: DOCUMENT_DELETED, payload: doc};
+export const deletedSheet = sheet => {
+  return {type: SHEET_DELETED, payload: sheet};
 };
 
-export const updatingDocumentContent = (doc, contents) => {
+export const updatingSheetContent = (sheet, contents) => {
   return dispatch => {
-    dispatch(updatedDocument(doc));
+    dispatch(updatedSheet(sheet));
   };
 };
 
@@ -99,13 +100,13 @@ export const writeResultText = text => {
   return {type: WRITE_RESULTS, payload: text};
 };
 
-export const updatingEditor = (doc, rawContent) => {
+export const updatingEditor = (sheet, rawContent) => {
   return dispatch => {
     dispatch(updatedEditorContent(rawContent));
     const contents = rawContent.blocks.map(b => b.text);
 
-    const newDoc = new Document({contents});
-    const results = newDoc.lines.map(l => l.result_formatted);
+    const newSheet = new Sheet({contents});
+    const results = newSheet.lines.map(l => l.result_formatted);
     dispatch(updatedResults(results));
   };
 };

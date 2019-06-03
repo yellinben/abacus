@@ -1,11 +1,11 @@
 import React from 'react';
-import { Link } from "react-router-dom";
 
-const SidebarItem = (props) => {
-  const {doc} = props;
+const SidebarItem = ({sheet}) => {
   return (
     <li>
-      <a href={`/documents/${doc.id}`}>{doc.title}</a>
+      <a href={`/sheets/${sheet.id}`}>
+        {sheet.title}
+      </a>
     </li>
   );
 }

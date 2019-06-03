@@ -2,9 +2,9 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
 import { 
-  fetchingDocument, 
-  updatingDocument, 
-  deletingDocument,
+  fetchingSheet, 
+  updatingSheet, 
+  deletingSheet,
   toggleDebug
 } from '../redux/actions';
 
@@ -22,15 +22,15 @@ class DocContainer extends Component {
 
   componentDidMount() {
     const params = this.props.match.params;
-    this.props.fetchingDocument(params.docId);
+    this.props.fetchingSheet(params.sheetId);
   }
   
   componentDidUpdate(prevProps, prevState) {
     const params = this.props.match.params;
     const prevParams = prevProps.match.params;
 
-    if (prevParams.docId !== params.docId) {
-      this.props.fetchingDocument(params.docId);
+    if (prevParams.sheetId !== params.sheetId) {
+      this.props.fetchingSheet(params.sheetId);
     }
   }
 
@@ -58,14 +58,14 @@ class DocContainer extends Component {
   }
 
   setTitle(title) {
-    if (title !== this.props.doc.title) {
-      this.props.doc.title = title;
-      this.props.updateDocument(this.props.doc);
+    if (title !== this.props.sheet.title) {
+      this.props.sheet.title = title;
+      this.props.updateSheet(this.props.sheet);
     }
   }
 
   handleDelete = (e) => {
-    this.props.deleteDocument(this.props.doc);
+    this.props.deleteSheet(this.props.sheet);
     this.props.history.push('/');
   }
 
@@ -74,10 +74,10 @@ class DocContainer extends Component {
   }
 
   render() {
-    const {doc} = this.props;
+    const {sheet} = this.props;
     return (
       <div className="doc-page-container">
-        {!doc ? 
+        {!sheet ? 
           <h3>Loading</h3> :
           <Fragment>
             <div className="doc-title-container">
@@ -86,14 +86,14 @@ class DocContainer extends Component {
                   <input type="text"
                     ref={this.titleField}
                     className="title-input"
-                    defaultValue={doc.title} 
+                    defaultValue={sheet.title} 
                     onBlur={this.handleTitleBlur} 
                     onKeyDown={this.handleTitleKeyDown} />
                 </div> :
                 <div className="doc-title">
                   <h1 className="doc-title-heading"
                     onClick={this.handleEditTitle}>
-                    {doc.title}
+                    {sheet.title}
                   </h1>
                   <div className="doc-title-actions">
                     <a className="doc-action edit-link"
@@ -106,7 +106,7 @@ class DocContainer extends Component {
                 </div>
               }
             </div>
-            <DocEditor doc={doc} />
+            <DocEditor sheet={sheet} />
           </Fragment>
         }
       </div>
@@ -116,20 +116,20 @@ class DocContainer extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    doc: state.document
+    sheet: state.sheet
   };
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchingDocument: (id) => {
-      dispatch(fetchingDocument(id));
+    fetchingSheet: (id) => {
+      dispatch(fetchingSheet(id));
     },
-    updateDocument: (doc) => {
-      dispatch(updatingDocument(doc));
+    updateSheet: (sheet) => {
+      dispatch(updatingSheet(sheet));
     },
-    deleteDocument: (doc) => {
-      dispatch(deletingDocument(doc));
+    deleteSheet: (sheet) => {
+      dispatch(deletingSheet(sheet));
     },
     toggleDebug: () => {
       dispatch(toggleDebug());

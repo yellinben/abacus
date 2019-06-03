@@ -191,17 +191,6 @@ class DocEditor extends Component {
     };
   }
 
-  // lines = () => this.props.doc.lines;
-  // contents = () => this.props.doc.contents;
-  // results = () => this.lines().map(l => l.result_formatted);
-
-  // contentText = () => this.contents().join('\n');
-  // resultText = () => this.results().join('\n');
-
-  // editorContent = () => this.state.inputState.getCurrentContent();
-  // editorText = () => this.editorContent().getPlainText('\n');
-  // editorLines = () => this.editorText().split('\n');
-
   handleChange = (editorState) => {
     if (this.state.inputState !== editorState) {
       this.setState({
@@ -210,15 +199,12 @@ class DocEditor extends Component {
       });
 
       this.handleContentChange(editorState);
-      // const rawContent = convertToRaw(editorState.getCurrentContent());
-      // this.props.updateContent(this.props.doc, rawContent);
     }
   }
 
   handleContentChange = debounce((editorState) => {
     const rawContent = convertToRaw(editorState.getCurrentContent());
-    // console.log('handleContentChange', rawContent);
-    this.props.updateContent(this.props.doc, rawContent);
+    this.props.updateContent(this.props.sheet, rawContent);
   }, 1);
 
   render() {
@@ -240,7 +226,7 @@ class DocEditor extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    doc: state.document,
+    sheet: state.sheet,
     inputState: EditorState.set(state.editor.inputState, {decorator: compositeDecorator}),
     resultState: state.editor.resultState,
     rawContent: state.editor.rawContent
@@ -249,9 +235,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateContent: (doc, content) => {
-      // console.log('updateContent', content);
-      dispatch(updatingEditor(doc, content))
+    updateContent: (sheet, content) => {
+      dispatch(updatingEditor(sheet, content))
     }
   }
 }

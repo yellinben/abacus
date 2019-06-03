@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Route } from 'react-router-dom';
 
-import { fetchingDocuments } from './redux/actions'
+import { fetchingSheets } from './redux/actions'
 
 import { Grid, Container } from 'semantic-ui-react';
 
@@ -13,7 +13,7 @@ import './App.scss'
 
 class App extends Component {
   componentDidMount() {
-    this.props.fetchDocuments();
+    this.props.fetchSheets();
   }
 
   render() {
@@ -26,7 +26,7 @@ class App extends Component {
           </Grid.Column>
           <Grid.Column width={12}>
             <Route exact
-              path="/documents/:docId"
+              path="/sheets/:sheetId"
               component={DocContainer} />
           </Grid.Column>
         </Grid>
@@ -37,14 +37,14 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    docs: state.documents
+    sheets: state.sheets
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchDocuments: () => {
-      dispatch(fetchingDocuments())
+    fetchSheets: () => {
+      dispatch(fetchingSheets())
     }
   }
 }
