@@ -1,16 +1,11 @@
+import { Document } from 'abacus-js';
+
 import {
   FETCHED_DOCUMENTS,
   FETCHED_DOCUMENT,
   DOCUMENT_CREATED,
   DOCUMENT_DELETED,
   DOCUMENT_UPDATED,
-  LINE_CREATED,
-  LINE_UPDATED,
-  LINE_DELETED,
-  LINE_SELECTED,
-  SELECT_LINE,
-  SELECT_LINE_RELATIVE,
-  ADD_LINE,
   TOGGLE_DEBUG,
   UPDATE_EDITOR,
   UPDATE_RESULTS,
@@ -20,10 +15,15 @@ import {
   WRITE_RESULTS,
 } from './types';
 
+const defaultDoc = new Document(
+  {title: 'npm'}, [
+  '1 + 4', '8 * 2.1'
+]);
+
 export const apiURL = (...paths) => {
   const API = {
     host: 'http://localhost',
-    port: 3000,
+    port: 3004,
     path: 'api',
     version: 1,
   };
@@ -36,18 +36,8 @@ export const apiURL = (...paths) => {
 
 export const creatingDocument = () => {
   return dispatch => {
-    // console.log('creatingDocument');
-    fetch(apiURL('documents'), {method: 'POST'})
-      .then(res => res.json())
-      .then(doc => {
-        const href = doc.id ? `/documents/${doc.id}` : '/';
-        window.location.href = href;
-        // return dispatch(createdDocument(doc));
-      })
-      .catch(err => {
-        console.error(err);
-        return dispatch(catchError(err));
-      });
+    const doc = new Document();
+    return dispatch(createdDocument(doc));
   };
 };
 
@@ -57,11 +47,7 @@ export const createdDocument = doc => {
 
 export const fetchingDocuments = () => {
   return dispatch => {
-    fetch(apiURL('documents'))
-      .then(res => res.json())
-      .then(docs => {
-        dispatch(fetchedDocuments(docs));
-      });
+    dispatch(fetchedDocuments([defaultDoc]));
   };
 };
 
@@ -71,11 +57,7 @@ export const fetchedDocuments = documents => {
 
 export const fetchingDocument = id => {
   return dispatch => {
-    fetch(apiURL('documents', id))
-      .then(res => res.json())
-      .then(doc => {
-        dispatch(fetchedDocument(doc));
-      });
+    dispatch(fetchedDocument(defaultDoc));
   };
 };
 
@@ -86,11 +68,6 @@ export const fetchedDocument = document => {
 export const updatingDocument = doc => {
   return dispatch => {
     dispatch(updatedDocument(doc));
-    fetch(apiURL('documents', doc.id), {
-      method: 'PATCH',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({title: doc.title}),
-    });
   };
 };
 
@@ -101,11 +78,6 @@ export const updatedDocument = doc => {
 export const deletingDocument = doc => {
   return dispatch => {
     dispatch(deletedDocument(doc));
-    fetch(apiURL('documents', doc.id), {
-      method: 'DELETE',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(doc),
-    });
   };
 };
 
@@ -113,19 +85,9 @@ export const deletedDocument = doc => {
   return {type: DOCUMENT_DELETED, payload: doc};
 };
 
-// export const updateResults = (editorState) => {
-//   return {type: UPDATE_RESULTS, payload: editorState};
-// }
-
 export const updatingDocumentContent = (doc, contents) => {
   return dispatch => {
-    fetch(apiURL('documents', doc.id), {
-      method: 'PATCH',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({contents}),
-    })
-      .then(res => res.json())
-      .then(doc => dispatch(updatedDocument(doc)));
+    dispatch(updatedDocument(doc));
   };
 };
 
@@ -142,20 +104,9 @@ export const updatingEditor = (doc, rawContent) => {
     dispatch(updatedEditorContent(rawContent));
     const contents = rawContent.blocks.map(b => b.text);
 
-    fetch(apiURL('documents', doc.id), {
-      method: 'PATCH',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({contents}),
-    })
-      .then(res => res.json())
-      .then(newDoc => {
-        const results = newDoc.lines.map(l => l.result_formatted);
-        dispatch(updatedResults(results));
-      })
-      .catch(err => {
-        console.error(err);
-        return dispatch(catchError(err));
-      });
+    const newDoc = new Document({contents});
+    const results = newDoc.lines.map(l => l.result_formatted);
+    dispatch(updatedResults(results));
   };
 };
 

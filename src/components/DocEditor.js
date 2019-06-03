@@ -217,7 +217,7 @@ class DocEditor extends Component {
 
   handleContentChange = debounce((editorState) => {
     const rawContent = convertToRaw(editorState.getCurrentContent());
-    console.log('handleContentChange', rawContent);
+    // console.log('handleContentChange', rawContent);
     this.props.updateContent(this.props.doc, rawContent);
   }, 1);
 

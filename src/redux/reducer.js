@@ -59,9 +59,6 @@ const documentReducer = (state = defaultDoc, action) => {
 
 /* input editor */
 
-// const defaultContentState = EditorState.createEmpty();
-// const defaultResultsState = EditorState.createEmpty();
-
 const defaultEditor = {
   contents: [],
   results: [],
@@ -98,7 +95,6 @@ const editorReducer = (state = defaultEditor, action) => {
         resultState: EditorState.createWithContent(resultContent)
       };
     case FETCHED_DOCUMENT:
-      // const {contents, lines} = action.payload;
       const {contents} = action.payload;
       const results = action.payload.lines.map(l => l.result_formatted);
 
@@ -110,19 +106,6 @@ const editorReducer = (state = defaultEditor, action) => {
         inputState: EditorState.createWithContent(inputContent),
         resultState: EditorState.createWithContent(resultContent)
       };
-    default:
-      return state;
-  }
-}
-
-/* results */
-
-const defaultResultsState = EditorState.createEmpty();
-
-const resultsReducer = (state = defaultResultsState, action) => {
-  switch (action.type) {
-    case UPDATE_RESULTS:
-      return action.payload;
     default:
       return state;
   }
