@@ -16,12 +16,6 @@ import {
   WRITE_RESULTS,
 } from './types';
 
-const tempSheet = new Sheet({title: 'temp'});
-tempSheet.add(
-  '1 + 4', 
-  '8 * 2.1'
-);
-
 export const creatingSheet = () => {
   return dispatch => {
     const sheet = Api.createSheet();
