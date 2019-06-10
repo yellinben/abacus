@@ -95,8 +95,8 @@ const editorReducer = (state = defaultEditor, action) => {
         resultState: EditorState.createWithContent(resultContent)
       };
     case FETCHED_SHEET:
-      const {contents} = action.payload;
-      const results = action.payload.lines.map(l => l.result_formatted);
+      const contents = action.payload.contents;
+      const results = action.payload.results();
 
       resultContent = ContentState.createFromText(results.join('\n'));
       inputContent = ContentState.createFromText(contents.join('\n'));
