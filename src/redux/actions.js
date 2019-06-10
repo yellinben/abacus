@@ -1,4 +1,5 @@
-import { Sheet } from 'abacus-js';
+import { Notebook, Sheet } from 'abacus-js';
+import Api from '../api';
 
 import {
   FETCHED_SHEETS,
@@ -21,23 +22,9 @@ tempSheet.add(
   '8 * 2.1'
 );
 
-export const apiURL = (...paths) => {
-  const API = {
-    host: 'http://localhost',
-    port: 3004,
-    path: 'api',
-    version: 1,
-  };
-
-  const url = [`${API.host}:${API.port}`, API.path, `v${API.version}`];
-  if (paths && paths.length) url.push(...paths);
-
-  return url.join('/');
-};
-
 export const creatingSheet = () => {
   return dispatch => {
-    const sheet = new Sheet();
+    const sheet = Api.createSheet();
     return dispatch(createdSheet(sheet));
   };
 };
@@ -48,7 +35,7 @@ export const createdSheet = sheet => {
 
 export const fetchingSheets = () => {
   return dispatch => {
-    dispatch(fetchedSheets([tempSheet]));
+    dispatch(fetchedSheets(Api.getSheets()));
   };
 };
 
@@ -58,7 +45,8 @@ export const fetchedSheets = sheets => {
 
 export const fetchingSheet = id => {
   return dispatch => {
-    dispatch(fetchedSheet(tempSheet));
+    const sheet = Api.getSheet(id);
+    dispatch(fetchedSheet(sheet));
   };
 };
 
@@ -68,7 +56,7 @@ export const fetchedSheet = sheet => {
 
 export const updatingSheet = sheet => {
   return dispatch => {
-    dispatch(updatedSheet(sheet));
+    dispatch(updatedSheet(Api.updateSheet(sheet)));
   };
 };
 
@@ -88,6 +76,7 @@ export const deletedSheet = sheet => {
 
 export const updatingSheetContent = (sheet, contents) => {
   return dispatch => {
+    sheet.update(contents);
     dispatch(updatedSheet(sheet));
   };
 };
@@ -103,11 +92,8 @@ export const writeResultText = text => {
 export const updatingEditor = (sheet, rawContent) => {
   return dispatch => {
     dispatch(updatedEditorContent(rawContent));
-    const contents = rawContent.blocks.map(b => b.text);
-
-    const newSheet = new Sheet({contents});
-    const results = newSheet.lines.map(l => l.result_formatted);
-    dispatch(updatedResults(results));
+    sheet.update(rawContent.blocks.map(b => b.text));
+    dispatch(updatedResults(sheet.results()));
   };
 };
 

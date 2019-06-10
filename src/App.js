@@ -35,10 +35,8 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    sheets: state.sheets
-  }
+const mapStateToProps = ({sheets}) => {
+  return {sheets};
 }
 
 const mapDispatchToProps = (dispatch) => {

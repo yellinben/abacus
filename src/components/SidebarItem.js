@@ -3,7 +3,7 @@ import React from 'react';
 const SidebarItem = ({sheet}) => {
   return (
     <li>
-      <a href={`/sheets/${sheet.id}`}>
+      <a href={`/sheets/${sheet.slug()}`}>
         {sheet.title}
       </a>
     </li>

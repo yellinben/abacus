@@ -22,7 +22,7 @@ class Sidebar extends Component {
             <Menu.Menu>
               {this.props.sheets.map(sheet => {
                 return <Menu.Item as={NavLink} 
-                  to={`/sheets/${sheet.id}`}
+                  to={`/sheets/${sheet.slug()}`}
                   key={sheet.id} name={sheet.title} />
               })}
             </Menu.Menu>
